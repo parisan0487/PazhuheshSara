@@ -1,6 +1,7 @@
 "use client"
 import React from "react"
 import { motion } from "framer-motion"
+import Link from "next/link"
 
 const textVariants = {
     hidden: { opacity: 0, x: 50 },
@@ -59,24 +60,26 @@ const AboutUsSection = () => {
                         whileHover="hover"
                         className="relative w-[180px] h-12 rounded-3xl overflow-hidden group flex items-center justify-center text-center font-bold text-white focus:outline-none mt-6"
                     >
-                        <span className="absolute inset-0 bg-gradient-to-r from-[#019297] via-[#73ED7C] to-[#019297] bg-[length:200%_auto] transition-all duration-400 ease-in-out group-hover:bg-right-bottom"></span>
-                        <div className="relative z-10 flex items-center justify-center gap-2">
-                            دوره‌های آموزشی
-                            <div className="rotate-[226deg]">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 30 24"
-                                    fill="white"
-                                    className="w-6 h-6 transform transition-transform duration-400 ease-in-out group-hover:rotate-[-47deg]"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M22.72 13.28a.75.75 0 010 1.06l-10 10a.75.75 0 01-1.06-1.06l8.22-8.22H3.75a.75.75 0 010-1.5h16.13l-8.22-8.22a.75.75 0 011.06-1.06l10 10z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
+                        <Link href="/courses">
+                            <span className="absolute inset-0 bg-gradient-to-r from-[#019297] via-[#73ED7C] to-[#019297] bg-[length:200%_auto] transition-all duration-400 ease-in-out group-hover:bg-right-bottom"></span>
+                            <div className="relative z-10 flex items-center justify-center gap-2">
+                                دوره‌های آموزشی
+                                <div className="rotate-[226deg]">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 30 24"
+                                        fill="white"
+                                        className="w-6 h-6 transform transition-transform duration-400 ease-in-out group-hover:rotate-[-47deg]"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M22.72 13.28a.75.75 0 010 1.06l-10 10a.75.75 0 01-1.06-1.06l8.22-8.22H3.75a.75.75 0 010-1.5h16.13l-8.22-8.22a.75.75 0 011.06-1.06l10 10z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     </motion.button>
                 </motion.div>
             </div>
