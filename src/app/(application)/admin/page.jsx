@@ -15,7 +15,6 @@ export default function AdminPage() {
         { href: '/admin/reservation', label: "🗓️نوبت ها" },
         { href: '/admin/blog', label: '📰 مدیریت مقالات' },
         { href: '/admin/change-password', label: '🔒 تغییر رمز عبور' },
-        { href: '/admin/users', label: '👥کاربران' },
     ];
 
     return (

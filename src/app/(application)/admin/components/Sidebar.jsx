@@ -6,7 +6,6 @@ import { Menu, X } from 'lucide-react';
 
 const links = [
     { href: '/admin/reservation', label: "نوبت ها" },
-    { href: '/admin/users', label: 'کاربران' },
     { href: '/admin/blog', label: 'مقالات' },
     { href: '/admin/change-password', label: "تغییر رمز" },
 ];
