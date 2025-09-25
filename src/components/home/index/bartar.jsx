@@ -103,12 +103,12 @@ export default function TeamSection() {
                         viewport={{ once: true, amount: 0.3 }}
                         className="flex flex-col sm:flex-row gap-6 items-center sm:items-stretch"
                     >
-                        {visibleMembers.map((member, i) => (
-                            <div
-                                key={i}
-                                className="flex-shrink-0 w-[calc(20%-12px)] bg-[#1f2937] rounded-2xl p-4 shadow-xl hover:shadow-2xl transition duration-300"
-                            >
-                                <div className="flex items-center gap-3 mt-auto">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                            {visibleMembers.map((member, i) => (
+                                <div
+                                    key={i}
+                                    className="bg-[#1f2937] rounded-2xl p-4 shadow-xl hover:shadow-2xl transition duration-300 flex items-center gap-3"
+                                >
                                     <User
                                         size={40}
                                         className="rounded-full border-2 border-[#00e0ca] bg-[#1f2937] p-1 text-[#00e0ca]"
@@ -119,8 +119,8 @@ export default function TeamSection() {
                                         <p className="text-gray-500 text-[10px]">{member.location}</p>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </motion.div>
                 </div>
             </div>
