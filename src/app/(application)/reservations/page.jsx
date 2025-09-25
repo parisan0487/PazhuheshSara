@@ -18,6 +18,17 @@ export default function ReservationUser() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 2000); // بعد از 2 ثانیه پاک می‌شود
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   // محاسبه تاریخ‌های این هفته و هفته بعد
   const getNextTwoWeeks = () => {
     const today = moment();
@@ -123,8 +134,8 @@ export default function ReservationUser() {
                 key={date}
                 onClick={() => setSelectedDate(date)}
                 className={`px-4 py-2 rounded-xl border font-medium transition ${selectedDate === date
-                    ? "bg-blue-600 border-blue-500 text-white shadow-lg"
-                    : "bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600"
+                  ? "bg-blue-600 border-blue-500 text-white shadow-lg"
+                  : "bg-gray-700 border-gray-600 text-gray-200 hover:bg-gray-600"
                   }`}
               >
                 {date}
