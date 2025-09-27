@@ -25,6 +25,7 @@
     "formidable": "^3.5.4",
     "framer-motion": "^12.19.1",
     "gsap": "^3.13.0",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.522.0",
     "moment": "^2.30.1",

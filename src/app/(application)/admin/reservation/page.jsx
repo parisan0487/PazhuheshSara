@@ -1,13 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import moment from "moment-jalaali";
-import { CheckCircle, TimerResetIcon } from "lucide-react";
 
 export default function AdminPanelModern() {
     const [reservations, setReservations] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // لیست ساعت‌ها
     const times = [
         "08:00 - 09:00",
         "09:00 - 10:00",
@@ -27,6 +25,8 @@ export default function AdminPanelModern() {
     };
 
     const nextTwoWeeks = getNextTwoWeeks();
+    const week1 = nextTwoWeeks.slice(0, 7);
+    const week2 = nextTwoWeeks.slice(7, 14);
 
     const fetchReservations = async () => {
         setLoading(true);
@@ -48,63 +48,64 @@ export default function AdminPanelModern() {
         fetchReservations();
     }, []);
 
+    // فقط نوبت‌های رزرو شده
+    const renderReservedTable = (dates) => {
+        const reserved = reservations.filter((r) => dates.includes(r.jDate));
+        if (reserved.length === 0) {
+            return <p className="text-gray-400 text-center py-3">هیچ رزروی ثبت نشده</p>;
+        }
+
+        return (
+            <div className="overflow-x-auto mt-3">
+                <table className="w-full min-w-[600px] border-collapse text-center">
+                    <thead>
+                        <tr className="bg-gray-900">
+                            <th className="border p-3">تاریخ</th>
+                            <th className="border p-3">ساعت</th>
+                            <th className="border p-3">نام</th>
+                            <th className="border p-3">مدرسه</th>
+                            <th className="border p-3">شماره تماس</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {reserved.map((r) => (
+                            <tr key={r._id} className="hover:bg-gray-700 transition-colors">
+                                <td className="border p-2">{r.jDate}</td>
+                                <td className="border p-2">{r.time}</td>
+                                <td className="border p-2">{r.fullName}</td>
+                                <td className="border p-2">{r.schoolName}</td>
+                                <td className="border p-2">{r.phone}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    };
+
     return (
         <div className="text-white bg-gray-800 rounded-2xl p-6 shadow-lg">
-            <h1 className="text-3xl font-bold mb-6 text-center text-[#00e0ca]">نوبت‌ها</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center text-[#00e0ca]">
+                مدیریت نوبت‌ها
+            </h1>
 
             {loading ? (
                 <p className="text-center text-gray-300">در حال بارگذاری...</p>
             ) : (
-                <div className="overflow-x-auto">
-                    <table className="w-full min-w-[600px] border-collapse text-center">
-                        <thead>
-                            <tr className="bg-gray-900">
-                                <th className="border p-3 text-sm sm:text-base">تاریخ</th>
-                                <th className="border p-3 text-sm sm:text-base">ساعت</th>
-                                <th className="border p-3 text-sm sm:text-base">وضعیت</th>
-                                <th className="border p-3 text-sm sm:text-base">نام</th>
-                                <th className="border p-3 text-sm sm:text-base">مدرسه</th>
-                                <th className="border p-3 text-sm sm:text-base">شماره تماس</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {nextTwoWeeks.map((date) =>
-                                times.map((time) => {
-                                    const res = reservations.find(
-                                        (r) => r.jDate === date && r.time === time
-                                    );
-                                    return (
-                                        <tr
-                                            key={date + time}
-                                            className="hover:bg-gray-700 transition-colors"
-                                        >
-                                            <td className="border p-2 sm:p-3">{date}</td>
-                                            <td className="border p-2 sm:p-3">{time}</td>
-                                            {res ? (
-                                                <>
-                                                    <td className="border p-2 sm:p-3 text-red-500 flex items-center justify-center gap-2 font-semibold">
-                                                        <TimerResetIcon className="w-4 h-4 sm:w-5 sm:h-5" /> رزرو شده
-                                                    </td>
-                                                    <td className="border p-2 sm:p-3">{res.fullName}</td>
-                                                    <td className="border p-2 sm:p-3">{res.schoolName}</td>
-                                                    <td className="border p-2 sm:p-3">{res.phone}</td>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <td className="border p-2 sm:p-3 text-green-400 flex items-center justify-center gap-2 font-semibold">
-                                                        <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" /> خالی
-                                                    </td>
-                                                    <td className="border p-2 sm:p-3">-</td>
-                                                    <td className="border p-2 sm:p-3">-</td>
-                                                    <td className="border p-2 sm:p-3">-</td>
-                                                </>
-                                            )}
-                                        </tr>
-                                    );
-                                })
-                            )}
-                        </tbody>
-                    </table>
+                <div className="space-y-4">
+                    <details className="bg-gray-900 rounded-lg p-3">
+                        <summary className="cursor-pointer font-semibold text-lg text-[#00e0ca]">
+                            📅 نوبت‌های هفته اول
+                        </summary>
+                        {renderReservedTable(week1)}
+                    </details>
+
+                    <details className="bg-gray-900 rounded-lg p-3">
+                        <summary className="cursor-pointer font-semibold text-lg text-[#00e0ca]">
+                            📅 نوبت‌های هفته دوم
+                        </summary>
+                        {renderReservedTable(week2)}
+                    </details>
                 </div>
             )}
         </div>

@@ -23,7 +23,7 @@ export default function Sidebar() {
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
     return (
-        <aside className="bg-white/5 backdrop-blur-md border border-gray-700 rounded-lg w-full sm:w-64">
+        <aside className="bg-white/5 backdrop-blur-md border h-96 border-gray-700 rounded-lg w-full sm:w-64">
             <div className="flex flex-col p-4 gap-4 h-full relative">
                 {/* Header */}
                 <div className="flex justify-between items-center sm:block">
