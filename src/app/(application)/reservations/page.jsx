@@ -221,17 +221,11 @@ export default function ReservationUser() {
             style={{ backgroundColor: "white" }}
           />
 
-          <button
-            onClick={() => setConfirmed(true)}
-            className={`mt-4 w-full px-5 py-3 rounded-2xl font-semibold transition-all ${confirmed ? "bg-green-600 text-white shadow-lg scale-105" : "bg-gray-400 text-white hover:bg-gray-500 shadow-md"
-              }`}
-          >
-            {confirmed ? "✔ اطلاعات تایید شد" : "تایید تاریخ"}
-          </button>
+         
         </div>
 
         {/* تایم‌ها */}
-        {confirmed && (
+        
           <div>
             <h3 className="mb-2 font-semibold text-lg text-gray-800">ساعات موجود</h3>
             <div className="grid grid-cols-3 gap-3">
@@ -256,10 +250,10 @@ export default function ReservationUser() {
               })}
             </div>
           </div>
-        )}
+        
 
         {/* تایید نهایی */}
-        {confirmed && (
+        
           <button
             onClick={handleFinalSubmit}
             disabled={loading}
@@ -267,7 +261,7 @@ export default function ReservationUser() {
           >
             تایید نهایی رزرو
           </button>
-        )}
+      
 
         {loading && <p className="mt-4 text-center text-green-600 font-medium animate-pulse">در حال پردازش...</p>}
         {message && (
