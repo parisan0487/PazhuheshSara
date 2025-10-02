@@ -226,7 +226,7 @@ export default function ReservationUser() {
             className={`mt-4 w-full px-5 py-3 rounded-2xl font-semibold transition-all ${confirmed ? "bg-green-600 text-white shadow-lg scale-105" : "bg-gray-400 text-white hover:bg-gray-500 shadow-md"
               }`}
           >
-            {confirmed ? "✔ تاریخ تایید شد" : "تایید تاریخ"}
+            {confirmed ? "✔ اطلاعات تایید شد" : "تایید تاریخ"}
           </button>
         </div>
 
