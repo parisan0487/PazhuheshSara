@@ -31,7 +31,7 @@ export default function ReservationUser() {
 
   const guideSteps = [
     { title: "مرحله اول", body: "ابتدا اطلاعات شخصی (نام، مدرسه و شماره تماس) را وارد کنید." },
-    { title: "مرحله دوم", body: "تاریخ موردنظر را از تقویم انتخاب و تایید کنید." },
+    { title: "مرحله دوم", body: "تاریخ موردنظر را از تقویم انتخاب و تایید کنید.  (لطفا از انتخاب تاریخ های گذشته خود داری کنید واگرنه ثبت نوبت شما بیهوده خواهد بود)." },
     { title: "مرحله سوم", body: "یکی از ساعت‌های آزاد را انتخاب کنید." },
     { title: "مرحله چهارم", body: "در پایان با دکمه «تایید نهایی» رزرو خود را ثبت کنید." },
   ];
@@ -136,7 +136,7 @@ export default function ReservationUser() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-6">
+    <div className="min-h-screen flex flex-col items-center p-6 mt-16">
       <h2 className="text-4xl md:text-5xl font-extrabold mb-8 text-green-900 drop-shadow-lg">
         رزرو نوبت
       </h2>
@@ -244,10 +244,10 @@ export default function ReservationUser() {
                     disabled={isReserved || loading}
                     onClick={() => setSelectedTime(time)}
                     className={`text-sm p-3 rounded-2xl font-medium transition-all shadow-md border ${isReserved
-                        ? "bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300"
-                        : isSelected
-                          ? "bg-green-700 text-white border-green-800 scale-110 shadow-lg"
-                          : "bg-green-500 hover:bg-green-600 text-white border-green-600"
+                      ? "bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300"
+                      : isSelected
+                        ? "bg-green-700 text-white border-green-800 scale-110 shadow-lg"
+                        : "bg-green-500 hover:bg-green-600 text-white border-green-600"
                       }`}
                   >
                     {time} {isReserved ? "❌" : ""}
@@ -276,6 +276,65 @@ export default function ReservationUser() {
           </p>
         )}
       </div>
+
+      {/* ---------- Modal Guide ---------- */}
+      {isGuideOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="guide-title"
+        >
+          <div className="relative bg-gray-900 rounded-3xl p-6 max-w-md w-full text-right text-white shadow-2xl transform transition-all duration-300 scale-95 animate-fade-in">
+            {/* عنوان مرحله */}
+            <h3 id="guide-title" className="text-2xl font-bold mb-3">
+              {guideSteps[guideStep].title}
+            </h3>
+
+            {/* توضیحات */}
+            <p className="text-gray-300 mb-5">{guideSteps[guideStep].body}</p>
+
+            {/* نشانگر مراحل */}
+            <div className="flex items-center justify-center gap-2 mb-5">
+              {guideSteps.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`w-3 h-3 rounded-full ${idx === guideStep ? "bg-green-400 scale-125" : "bg-gray-600"} transition-transform`}
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+
+            {/* دکمه‌ها */}
+            <div className="flex items-center justify-between gap-3">
+              <button
+                onClick={handlePrevGuide}
+                disabled={guideStep === 0}
+                className={`px-5 py-2 rounded-xl ${guideStep === 0 ? "bg-gray-800 text-gray-500 cursor-not-allowed" : "bg-gray-800 hover:bg-gray-700"}`}
+              >
+                قبلی
+              </button>
+
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={closeGuide}
+                  className="px-5 py-2 rounded-xl bg-transparent border border-gray-700 hover:bg-gray-800"
+                >
+                  بستن
+                </button>
+
+                <button
+                  onClick={handleNextGuide}
+                  className="px-5 py-2 rounded-xl bg-green-500 hover:bg-green-600 shadow-lg"
+                >
+                  {guideStep === guideSteps.length - 1 ? "تمام" : "بعدی"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
