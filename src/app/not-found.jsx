@@ -15,7 +15,7 @@ export default function NotFound() {
                 <p className="text-lg text-gray-700 mb-6">صفحه‌ای که دنبال آن هستید پیدا نشد.</p>
                 <button
                     onClick={() => router.push('/')}
-                    className="bg-[#40E0D0] hover:bg-[#2cc7ba] text-white px-6 py-2 rounded-full transition"
+                    className="bg-[#40E0D0] hover:bg-[#2cc7ba] text-black px-6 py-2 rounded-full transition"
                 >
                     بازگشت به خانه
                 </button>

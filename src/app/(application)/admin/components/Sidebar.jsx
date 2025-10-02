@@ -23,17 +23,17 @@ export default function Sidebar() {
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
     return (
-        <aside className="bg-white/5 backdrop-blur-md border h-96 border-gray-700 rounded-lg w-full sm:w-64">
+        <aside className="bg-gray-200 border border-gray-200 rounded-lg sm:h-96 h-36 shadow-sm w-full sm:w-64">
             <div className="flex flex-col p-4 gap-4 h-full relative">
                 {/* Header */}
                 <div className="flex justify-between items-center sm:block">
                     <Link href="/admin">
-                        <h2 className="text-xl font-bold text-[#00e0ca]">پنل ادمین</h2>
+                        <h2 className="text-xl font-bold text-teal-600">پنل ادمین</h2>
                     </Link>
 
                     {/* Hamburger Menu - Only visible on mobile */}
                     <button
-                        className="sm:hidden text-gray-300"
+                        className="sm:hidden text-gray-600"
                         onClick={toggleMenu}
                         aria-label="toggle menu"
                     >
@@ -44,7 +44,7 @@ export default function Sidebar() {
                 {/* Navigation Links */}
                 <nav
                     className={`flex flex-col gap-3 transition-all duration-300 overflow-hidden sm:overflow-visible
-                    ${menuOpen ? 'max-h-screen mt-4' : 'max-h-0 sm:max-h-full'} sm:mt-6 sm:flex`}
+        ${menuOpen ? 'max-h-screen mt-4' : 'max-h-0 sm:max-h-full'} sm:mt-6 sm:flex`}
                 >
                     {links.map(({ href, label }) => {
                         const isActive = pathname === href;
@@ -53,14 +53,14 @@ export default function Sidebar() {
                             <Link
                                 key={href}
                                 href={href}
-                                onClick={() => setMenuOpen(false)} // بستن منو بعد از کلیک روی لینک در موبایل
+                                onClick={() => setMenuOpen(false)}
                                 className={`
-                                    px-3 py-2 rounded-md text-center sm:text-right text-[15px] sm:text-lg font-medium
-                                    transition-all
-                                    ${isActive
-                                        ? 'bg-[#00e0ca] text-black shadow'
-                                        : 'text-gray-300 hover:text-[#00e0ca] hover:bg-[#2c2c2c]'}
-                                `}
+                px-3 py-2 rounded-md text-center sm:text-right text-[15px] sm:text-lg font-medium
+                transition-all
+                ${isActive
+                                        ? 'bg-teal-500 text-white shadow'
+                                        : 'text-gray-700 hover:text-teal-600 hover:bg-gray-100'}
+              `}
                             >
                                 {label}
                             </Link>
@@ -71,7 +71,7 @@ export default function Sidebar() {
                 {/* Logout Button */}
                 <button
                     onClick={handleLogout}
-                    className="text-red-400 hover:text-red-600 text-[16px] sm:text-lg transition-colors mt-4 sm:mt-8"
+                    className="text-red-500 hover:text-red-700 text-[16px] sm:text-lg transition-colors mt-4 sm:mt-8 font-medium"
                 >
                     خروج
                 </button>

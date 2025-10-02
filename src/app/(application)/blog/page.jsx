@@ -55,7 +55,7 @@
 //   }
 
 //   return (
-//     <main className="text-white min-h-screen px-4 py-16">
+//     <main className="text-black min-h-screen px-4 py-16">
 //       <div className="max-w-6xl mx-auto">
 //         {/* تیتر */}
 //         <motion.div
@@ -65,7 +65,7 @@
 //           transition={{ duration: 0.6 }}
 //         >
 //           <h1 className="text-3xl md:text-5xl font-bold mb-4 text-[#00e0ca]">وبلاگ ما</h1>
-//           <p className="text-white/70 max-w-xl mx-auto text-base md:text-lg">
+//           <p className="text-black/70 max-w-xl mx-auto text-base md:text-lg">
 //             در اینجا جدیدترین مقالات آموزشی، ترفندها و اخبار دنیای تکنولوژی را دنبال کنید.
 //           </p>
 //         </motion.div>
@@ -108,12 +108,12 @@
 //                         />
 //                         <div className="p-5 flex flex-col flex-grow">
 //                           <h3 className="text-lg md:text-xl font-bold mb-2">{post.title}</h3>
-//                           <p className="text-sm text-white/70 mb-4 flex-grow">{post.excerpt}</p>
+//                           <p className="text-sm text-black/70 mb-4 flex-grow">{post.excerpt}</p>
 //                           <div className="flex items-center justify-between text-[#00e0ca] font-medium gap-2">
 //                             <span className="flex items-center gap-1 hover:underline cursor-pointer">
 //                               مطالعه مقاله <ArrowLeft size={18} />
 //                             </span>
-//                             <span className="text-white/50 text-xs">{formattedDate}</span>
+//                             <span className="text-black/50 text-xs">{formattedDate}</span>
 //                           </div>
 //                         </div>
 //                       </motion.div>
@@ -128,14 +128,14 @@
 //               <button
 //                 onClick={handlePrev}
 //                 disabled={page === 0}
-//                 className="px-4 py-2 bg-white/10 rounded-xl text-white disabled:opacity-30"
+//                 className="px-4 py-2 bg-white/10 rounded-xl text-black disabled:opacity-30"
 //               >
 //                 قبلی
 //               </button>
 //               <button
 //                 onClick={handleNext}
 //                 disabled={(page + 1) * perPage >= posts.length}
-//                 className="px-4 py-2 bg-white/10 rounded-xl text-white disabled:opacity-30"
+//                 className="px-4 py-2 bg-white/10 rounded-xl text-black disabled:opacity-30"
 //               >
 //                 بعدی
 //               </button>

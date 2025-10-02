@@ -90,7 +90,7 @@ export default function BlogsListPage() {
                             className="p-4 rounded-xl shadow-md bg-[#1a1a1a] flex justify-between items-center"
                         >
                             <div>
-                                <h2 className="text-lg font-semibold text-white">{blog.title}</h2>
+                                <h2 className="text-lg font-semibold text-black">{blog.title}</h2>
                                 <p className="text-sm text-gray-400">
                                     {new Date(blog.createdAt).toLocaleDateString('fa-IR')}
                                 </p>
@@ -112,13 +112,13 @@ export default function BlogsListPage() {
                                 {showDeleteModal && (
                                     <div className="fixed inset-0 flex items-center justify-center z-50">
                                         <div className="bg-[#062e2e] rounded-2xl p-8 w-[350px] max-w-full mx-4 shadow-2xl text-center">
-                                            <p className="mb-8 text-xl font-semibold text-white">
+                                            <p className="mb-8 text-xl font-semibold text-black">
                                                 آیا از حذف مقاله مطمئن هستید؟
                                             </p>
                                             <div className="flex justify-center gap-6">
                                                 <button
                                                     onClick={confirmDelete}
-                                                    className="flex-1 py-3 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition"
+                                                    className="flex-1 py-3 rounded-lg bg-red-600 text-black font-semibold hover:bg-red-700 transition"
                                                     autoFocus
                                                 >
                                                     حذف

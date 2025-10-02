@@ -55,48 +55,48 @@ export default function ChangePasswordPage() {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-16 p-6 rounded-2xl shadow-lg bg-[#1a1a1a] text-white border border-gray-700">
-            <h1 className="text-2xl font-bold mb-6 text-center border-b border-[#00e0ca] pb-2">
+        <div className="max-w-md mx-auto mt-16 p-6 rounded-2xl shadow-lg bg-white text-gray-800 border border-gray-200">
+            <h1 className="text-2xl font-bold mb-6 text-center border-b border-[#00b894] pb-2">
                 تغییر رمز عبور
             </h1>
 
             <div className="space-y-5 text-right">
                 <div>
-                    <label className="block text-sm text-gray-300 mb-1">رمز عبور فعلی</label>
+                    <label className="block text-sm text-gray-600 mb-1">رمز عبور فعلی</label>
                     <input
                         type="password"
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
-                        className="w-full px-4 py-2 rounded-lg bg-[#2a2a2a] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+                        className="w-full px-4 py-2 rounded-lg bg-gray-50 text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#00b894]"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm text-gray-300 mb-1">رمز عبور جدید</label>
+                    <label className="block text-sm text-gray-600 mb-1">رمز عبور جدید</label>
                     <input
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        className="w-full px-4 py-2 rounded-lg bg-[#2a2a2a] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+                        className="w-full px-4 py-2 rounded-lg bg-gray-50 text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#00b894]"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm text-gray-300 mb-1">تکرار رمز عبور جدید</label>
+                    <label className="block text-sm text-gray-600 mb-1">تکرار رمز عبور جدید</label>
                     <input
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="w-full px-4 py-2 rounded-lg bg-[#2a2a2a] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+                        className="w-full px-4 py-2 rounded-lg bg-gray-50 text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#00b894]"
                     />
                 </div>
 
                 <button
                     onClick={handleChange}
                     disabled={loading}
-                    className="w-full py-2 bg-[#00e0ca] text-black font-semibold rounded-lg hover:bg-[#00cbb5] transition-all disabled:opacity-50"
+                    className="w-full py-2 bg-[#00b894] text-white font-semibold rounded-lg hover:bg-[#009e7d] transition-all disabled:opacity-50"
                 >
-                    {loading ? 'در حال تغییر...' : 'تغییر رمز'}
+                    {loading ? "در حال تغییر..." : "تغییر رمز"}
                 </button>
             </div>
         </div>

@@ -112,7 +112,7 @@ const ContactPageSection = () => {
   }, [])
 
   return (
-    <section className="w-full px-4 sm:px-8 py-16 text-right text-white font-sans">
+    <section className="w-full px-4 sm:px-8 py-16 text-right text-black font-sans">
       {/* هدر */}
       <motion.div
         initial={shouldAnimate ? { opacity: 0, y: 40 } : false}
@@ -140,7 +140,7 @@ const ContactPageSection = () => {
             required
             value={formData.name}
             onChange={handleChange}
-            className="bg-[#1c262d] border border-[#00e0ca]/50 rounded-lg py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+            className="bg-[#1c262d] border border-[#00e0ca]/50 rounded-lg py-3 px-4 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
           />
           <input
             type="email"
@@ -149,7 +149,7 @@ const ContactPageSection = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            className="bg-[#1c262d] border border-[#00e0ca]/50 rounded-lg py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+            className="bg-[#1c262d] border border-[#00e0ca]/50 rounded-lg py-3 px-4 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
           />
           <input
             type="tel"
@@ -157,7 +157,7 @@ const ContactPageSection = () => {
             placeholder="شماره تماس"
             value={formData.phone}
             onChange={handleChange}
-            className="bg-[#1c262d] border border-[#00e0ca]/50 rounded-lg py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00e0ca] text-end"
+            className="bg-[#1c262d] border border-[#00e0ca]/50 rounded-lg py-3 px-4 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00e0ca] text-end"
           />
           <input
             type="text"
@@ -166,7 +166,7 @@ const ContactPageSection = () => {
             required
             value={formData.subject}
             onChange={handleChange}
-            className="bg-[#1c262d] border border-[#00e0ca]/50 rounded-lg py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+            className="bg-[#1c262d] border border-[#00e0ca]/50 rounded-lg py-3 px-4 text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
           />
           <textarea
             name="message"
@@ -175,7 +175,7 @@ const ContactPageSection = () => {
             required
             value={formData.message}
             onChange={handleChange}
-            className="bg-[#1c262d] border border-[#00e0ca]/50 rounded-lg py-3 px-4 text-white placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+            className="bg-[#1c262d] border border-[#00e0ca]/50 rounded-lg py-3 px-4 text-black placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
           />
           <button
             type="submit"

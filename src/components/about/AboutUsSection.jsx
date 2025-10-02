@@ -49,7 +49,7 @@ const AboutUsSection = () => {
                             key={i}
                             custom={i + 1}
                             variants={textVariants}
-                            className="text-white text-base sm:text-xl leading-relaxed mb-4"
+                            className="text-black text-base sm:text-xl leading-relaxed mb-4"
                         >
                             {text}
                         </motion.p>
@@ -58,7 +58,7 @@ const AboutUsSection = () => {
                     <motion.button
                         variants={buttonVariants}
                         whileHover="hover"
-                        className="relative w-[180px] h-12 rounded-3xl overflow-hidden group flex items-center justify-center text-center font-bold text-white focus:outline-none mt-6"
+                        className="relative w-[180px] h-12 rounded-3xl overflow-hidden group flex items-center justify-center text-center font-bold text-black focus:outline-none mt-6"
                     >
                         <Link href="/courses">
                             <span className="absolute inset-0 bg-gradient-to-r from-[#019297] via-[#73ED7C] to-[#019297] bg-[length:200%_auto] transition-all duration-400 ease-in-out group-hover:bg-right-bottom"></span>

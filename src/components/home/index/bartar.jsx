@@ -53,7 +53,7 @@ export default function TeamSection() {
     };
 
     return (
-        <section className="text-white py-20 px-4 relative overflow-hidden">
+        <section className="text-black py-20 px-4 relative overflow-hidden">
             <div className="max-w-7xl mx-auto relative">
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
@@ -87,7 +87,7 @@ export default function TeamSection() {
                             </button>
                         </div>
                     </div>
-                    <p className="text-gray-300 text-sm sm:text-base leading-7">
+                    <p className="text-gray-700 text-sm sm:text-base leading-7">
                         «نفرات برتر کاشمر، نمونه‌ای از تلاش و خلاقیت»
                     </p>
                 </motion.div>
@@ -115,7 +115,7 @@ export default function TeamSection() {
                                     />
                                     <div>
                                         <h4 className="font-bold text-[#00e0ca] text-sm">{member.name}</h4>
-                                        <p className="text-gray-400 text-xs">{member.role}</p>
+                                        <p className="text-gray-200 text-xs">{member.role}</p>
                                         <p className="text-gray-500 text-[10px]">{member.location}</p>
                                     </div>
                                 </div>

@@ -1,6 +1,4 @@
 "use client";
-
-import { Facebook, Instagram, Send, Twitter } from "lucide-react";
 import Link from "next/link";
 
 
@@ -42,7 +40,7 @@ export default function Footer() {
                     <Link href="/portfolio" className="hover:text-green-400 transition">دوره های آموزشی</Link>
                     <Link href="/about" className="hover:text-green-400 transition">درباره ما</Link>
                 </div>
-                <p className="text-xs sm:text-sm text-gray-400">
+                <p className="text-xs sm:text-sm text-gray-300">
                     تمامی حقوق این سایت برای <span className="font-bold text-white">پژوهس سرا</span> محفوظ است.
                 </p>
             </div>

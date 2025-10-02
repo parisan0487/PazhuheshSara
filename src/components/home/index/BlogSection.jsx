@@ -31,7 +31,7 @@ const honors = [
 
 export default function HonorsSection() {
     return (
-        <section className="py-16 px-4 text-white mb-24">
+        <section className="py-16 px-4 text-black mb-24">
             <div className="max-w-4xl mx-auto text-center mb-12">
                 <motion.h2
                     initial="hidden"

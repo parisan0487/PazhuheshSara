@@ -108,7 +108,7 @@ export default function NewBlogsPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-[#1a1a1a] rounded-lg shadow-lg text-white border border-gray-700">
+    <div className="max-w-3xl mx-auto p-6 bg-[#1a1a1a] rounded-lg shadow-lg text-black border border-gray-700">
       <h2 className="text-3xl font-bold mb-6 text-[#00e0ca]">افزودن مقاله جدید</h2>
       {error && <p className="text-red-500 mb-4">{error}</p>}
 
@@ -116,7 +116,7 @@ export default function NewBlogsPage() {
         <input
           type="text"
           placeholder="عنوان مقاله"
-          className="w-full p-3 rounded bg-[#121212] border border-gray-700 text-white"
+          className="w-full p-3 rounded bg-[#121212] border border-gray-700 text-black"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           disabled={uploading}
@@ -126,7 +126,7 @@ export default function NewBlogsPage() {
 
         <textarea
           placeholder="توضیح کوتاه (excerpt)"
-          className="w-full p-3 rounded bg-[#121212] border border-gray-700 text-white"
+          className="w-full p-3 rounded bg-[#121212] border border-gray-700 text-black"
           rows={3}
           value={excerpt}
           onChange={(e) => setExcerpt(e.target.value)}
@@ -168,7 +168,7 @@ export default function NewBlogsPage() {
 
     
         <label className="block font-bold text-sm text-gray-300 mb-1">توضیحات مقاله:</label>
-        <div className="bg-[#121212] border border-gray-700 rounded p-3 min-h-[300px] text-white">
+        <div className="bg-[#121212] border border-gray-700 rounded p-3 min-h-[300px] text-black">
           <EditorContent editor={editor} />
         </div>
 
@@ -196,7 +196,7 @@ export default function NewBlogsPage() {
             <button
               type="button"
               onClick={handleRemoveThumbnail}
-              className="absolute top-1 left-1 bg-red-600 text-white rounded px-2 py-1 text-sm"
+              className="absolute top-1 left-1 bg-red-600 text-black rounded px-2 py-1 text-sm"
             >
               حذف
             </button>

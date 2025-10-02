@@ -57,7 +57,7 @@ const projects = [
 
 export default function ProjectsSection() {
     return (
-        <section className="py-16 px-4 text-white mb-24">
+        <section className="py-16 px-4 text-black mb-24">
             <div className="max-w-4xl text-center mb-12">
                 <div className="flex justify-between">
                     <motion.h2

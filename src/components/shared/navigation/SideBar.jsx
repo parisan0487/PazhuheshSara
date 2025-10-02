@@ -73,7 +73,7 @@ export default function Sidebar() {
                             <Link
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className="block text-white text-lg px-4 py-2 rounded-xl hover:bg-[#019297]/30 transition duration-300"
+                                className="block text-black text-lg px-4 py-2 rounded-xl hover:bg-[#019297]/30 transition duration-300"
                             >
                                 {item.title}
                             </Link>

@@ -31,17 +31,17 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center text-white">
+        <div className="min-h-screen flex items-center justify-center text-gray-900">
             <form
                 onSubmit={handleLogin}
-                className="bg-[#1c1c1c] p-8 rounded-2xl shadow-xl w-80 space-y-5 border border-[#2c2c2c]"
+                className="bg-white p-8 rounded-2xl shadow-lg w-80 space-y-5 border border-gray-200"
             >
-                <h2 className="text-2xl font-bold text-center text-white">ورود</h2>
+                <h2 className="text-2xl font-bold text-center text-gray-800">ورود</h2>
 
                 <input
                     type="text"
                     placeholder="نام کاربری"
-                    className="w-full p-3 rounded-lg bg-[#2b2b2b] border border-[#444] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+                    className="w-full p-3 rounded-lg bg-gray-50 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
@@ -49,7 +49,7 @@ export default function LoginForm() {
                 <input
                     type="password"
                     placeholder="رمز عبور"
-                    className="w-full p-3 rounded-lg bg-[#2b2b2b] border border-[#444] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+                    className="w-full p-3 rounded-lg bg-gray-50 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
@@ -57,7 +57,7 @@ export default function LoginForm() {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[#00e0ca] hover:bg-[#00e0ca]/90 transition-colors p-3 rounded-lg font-semibold disabled:opacity-50"
+                    className="w-full bg-teal-500 hover:bg-teal-600 transition-colors p-3 rounded-lg font-semibold text-white disabled:opacity-50"
                 >
                     {loading ? 'در حال ورود...' : 'ورود'}
                 </button>

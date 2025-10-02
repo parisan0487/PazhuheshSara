@@ -53,10 +53,10 @@ export default function NewUserButton({ onUserCreated }) {
 
             {showModal && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40 backdrop-blur-sm animate-fade-in">
-                    <div className="bg-[#0a2d2d] rounded-2xl p-6 w-[360px] max-w-full mx-4 shadow-2xl text-white relative">
+                    <div className="bg-[#0a2d2d] rounded-2xl p-6 w-[360px] max-w-full mx-4 shadow-2xl text-black relative">
                         <button
                             onClick={() => setShowModal(false)}
-                            className="absolute top-4 left-4 text-white hover:text-gray-300"
+                            className="absolute top-4 left-4 text-black hover:text-gray-300"
                         >
                             <X />
                         </button>
@@ -73,7 +73,7 @@ export default function NewUserButton({ onUserCreated }) {
                                     placeholder="مثلاً ali123"
                                     value={form.username}
                                     onChange={(e) => setForm({ ...form, username: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+                                    className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
                                 />
                             </div>
 
@@ -84,7 +84,7 @@ export default function NewUserButton({ onUserCreated }) {
                                     placeholder="حداقل ۶ حرف"
                                     value={form.password}
                                     onChange={(e) => setForm({ ...form, password: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+                                    className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
                                 />
                             </div>
 
@@ -93,7 +93,7 @@ export default function NewUserButton({ onUserCreated }) {
                                 <select
                                     value={form.role}
                                     onChange={(e) => setForm({ ...form, role: e.target.value })}
-                                    className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
+                                    className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] text-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]"
                                 >
                                     <option value="admin">ادمین</option>
                                 </select>

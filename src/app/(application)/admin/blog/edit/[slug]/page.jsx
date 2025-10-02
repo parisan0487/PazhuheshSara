@@ -97,7 +97,7 @@
 //     if (loading) return <p className="text-center py-10">در حال بارگذاری...</p>
 
 //     return (
-//         <div className="p-6 max-w-2xl mx-auto bg-[#1a1a1a] rounded-lg shadow-lg text-white border border-gray-700">
+//         <div className="p-6 max-w-2xl mx-auto bg-[#1a1a1a] rounded-lg shadow-lg text-black border border-gray-700">
 //             <h1 className="text-2xl font-bold mb-6 text-[#00e0ca]">ویرایش مقاله</h1>
 
 //             <form onSubmit={handleSubmit} className="space-y-4">
@@ -106,7 +106,7 @@
 //                     value={formData.title}
 //                     onChange={handleChange}
 //                     placeholder="عنوان مقاله"
-//                     className="w-full px-4 py-2 rounded-lg bg-[#121212] border border-gray-700 text-white"
+//                     className="w-full px-4 py-2 rounded-lg bg-[#121212] border border-gray-700 text-black"
 //                     required
 //                 />
 //                 <input
@@ -114,7 +114,7 @@
 //                     value={formData.excerpt}
 //                     onChange={handleChange}
 //                     placeholder="خلاصه"
-//                     className="w-full px-4 py-2 rounded-lg bg-[#121212] border border-gray-700 text-white"
+//                     className="w-full px-4 py-2 rounded-lg bg-[#121212] border border-gray-700 text-black"
 //                     required
 //                 />
 
@@ -124,7 +124,7 @@
 //                         <button
 //                             type="button"
 //                             onClick={() => editor.chain().focus().toggleBold().run()}
-//                             className={`px-3 py-1 rounded ${editor.isActive('bold') ? 'bg-[#00e0ca] text-black' : 'bg-gray-700 text-white'
+//                             className={`px-3 py-1 rounded ${editor.isActive('bold') ? 'bg-[#00e0ca] text-black' : 'bg-gray-700 text-black'
 //                                 }`}
 //                         >
 //                             بولد
@@ -132,7 +132,7 @@
 //                         <button
 //                             type="button"
 //                             onClick={() => editor.chain().focus().toggleItalic().run()}
-//                             className={`px-3 py-1 rounded ${editor.isActive('italic') ? 'bg-[#00e0ca] text-black' : 'bg-gray-700 text-white'
+//                             className={`px-3 py-1 rounded ${editor.isActive('italic') ? 'bg-[#00e0ca] text-black' : 'bg-gray-700 text-black'
 //                                 }`}
 //                         >
 //                             ایتالیک
@@ -151,7 +151,7 @@
 //                 <label className="block font-bold text-sm text-gray-300 mb-1">توضیحات مقاله:</label>
 //                 <EditorContent
 //                     editor={editor}
-//                     className="bg-[#121212] border border-gray-700 text-white rounded-lg p-4 min-h-[200px] font-mono text-sm"
+//                     className="bg-[#121212] border border-gray-700 text-black rounded-lg p-4 min-h-[200px] font-mono text-sm"
 //                 />
 
 //                 <button

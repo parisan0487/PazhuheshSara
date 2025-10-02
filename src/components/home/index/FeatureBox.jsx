@@ -38,7 +38,7 @@ const FeatureBox = () => {
                 initial={{ opacity: 0, y: 50 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="w-full max-w-7xl px-4 max-sm:px-10 py-6 dark:bg-gray-800 rounded-lg shadow-xl dark:shadow-gray-700/30 border border-gray-200 dark:border-gray-700"
+                className="w-full max-w-7xl px-4 max-sm:px-10 py-6 bg-gray-300 rounded-lg shadow-xl border border-gray-200"
             >
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-8 max-sm:gap-y-0">
                     {features.map((feature, index) => (
@@ -52,10 +52,10 @@ const FeatureBox = () => {
                                 <div className="p-3 bg-white/20 dark:bg-gray-700/50 rounded-full mb-2 backdrop-blur-sm">
                                     {feature.icon}
                                 </div>
-                                <h3 className="font-bold text-lg text-white dark:text-gray-100 mb-1">
+                                <h3 className="font-bold text-lg text-black dark:text-gray-100 mb-1">
                                     {feature.title}
                                 </h3>
-                                <p className="text-white/80 dark:text-gray-300 text-sm">
+                                <p className="text-black/80 dark:text-gray-300 text-sm">
                                     {feature.desc}
                                 </p>
 

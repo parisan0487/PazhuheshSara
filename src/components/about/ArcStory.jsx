@@ -43,7 +43,7 @@ const timeline = [
 
 export default function ArkStory() {
     return (
-        <section className="relative py-20  text-white">
+        <section className="relative py-20  text-black">
             <div className="container mx-auto px-4">
                 <h2 className="text-5xl font-bold text-center mb-16 ">سرگذشت آرک</h2>
 

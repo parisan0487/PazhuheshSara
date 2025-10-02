@@ -9,7 +9,7 @@ export default function Header() {
         <div className="rounded-3xl overflow-hidden relative h-[25rem]">
             <div>
 
-                <div className="text-white min-md:mt-36 min-md:mr-20 mr-3 max-md:mt-20">
+                <div className="text-black min-md:mt-36 min-md:mr-20 mr-3 max-md:mt-20">
                     {/* متن‌ها */}
                     <motion.div
                         initial={{ y: 50, opacity: 0 }}
@@ -76,10 +76,10 @@ export default function Header() {
                         >
                             <Link href="/about">
                                 <button className="relative w-[160px] h-12 rounded-3xl overflow-hidden group flex items-center justify-center text-center font-bold max-[379px]:w-[140px]! max-[341px]:w-[125px]!">
-                                    <span className="absolute inset-0 bg-white transition-all duration-500 ease-in-out"></span>
+                                    <span className="absolute inset-0 bg-[#ededed] transition-all duration-500 ease-in-out"></span>
                                     <span className="absolute inset-0 bg-gradient-to-r from-[#019297] via-[#73ED7C] to-[#019297] bg-[length:200%_auto] opacity-0 transition-all duration-800 ease-in-out group-hover:opacity-100 group-hover:bg-left"></span>
                                     <div className="relative z-10 flex items-center justify-center gap-2">
-                                        <span className="text-black group-hover:text-white transition-colors duration-300">
+                                        <span className="text-black group-hover:text-black transition-colors duration-300">
                                             بیشتر بخوانید
                                         </span>
                                         <div className="rotate-[226deg] group-hover:rotate-[179deg] transition-transform duration-400">
@@ -87,7 +87,7 @@ export default function Header() {
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 30 24"
                                                 fill="currentColor"
-                                                className="w-6 h-6 text-[#019297] group-hover:text-white transition-colors duration-300"
+                                                className="w-6 h-6 text-[#019297] group-hover:text-black transition-colors duration-300"
                                             >
                                                 <path
                                                     fillRule="evenodd"

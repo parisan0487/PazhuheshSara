@@ -103,10 +103,10 @@ const ServicesSection = () => {
                                 className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center md:items-start"
                             >
                                 <div className="mb-6">{text.icon}</div>
-                                <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 text-white">
+                                <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 text-black">
                                     {text.title}
                                 </h3>
-                                <p className="text-base sm:text-lg md:text-2xl text-white/80 px-2 sm:px-0">
+                                <p className="text-base sm:text-lg md:text-2xl text-black/80 px-2 sm:px-0">
                                     {text.content}
                                 </p>
                             </motion.div>

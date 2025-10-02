@@ -29,7 +29,7 @@ export default function Counseling() {
 
                 <Link
                     href="/reservations"
-                    className="bg-green-400 text-white w-40 py-3 mx-auto rounded-xl hover:bg-green-500 transition font-semibold flex items-center gap-2 justify-center"
+                    className="bg-green-400 text-black w-40 py-3 mx-auto rounded-xl hover:bg-green-500 transition font-semibold flex items-center gap-2 justify-center"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
