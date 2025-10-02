@@ -28,7 +28,7 @@ const FeatureBox = () => {
             title: "شکوفایی ایده‌ها",
             desc: "شکل‌گیری پژوهش خلاق در چارچوب تفکر علمی دانش‌آموزان",
         },
-        
+
     ];
 
     return (
@@ -38,7 +38,7 @@ const FeatureBox = () => {
                 initial={{ opacity: 0, y: 50 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="w-full max-w-7xl px-4 max-sm:px-10 py-6 bg-gray-300 rounded-lg shadow-xl border border-gray-200"
+                className="w-full max-w-7xl px-4 max-sm:px-10 py-6 bg-white rounded-lg shadow-xl border border-gray-200"
             >
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-8 max-sm:gap-y-0">
                     {features.map((feature, index) => (
@@ -49,7 +49,7 @@ const FeatureBox = () => {
                                 transition={{ delay: index * 0.2 + 0.3, duration: 0.6 }}
                                 className="flex flex-col items-center text-center relative px-4"
                             >
-                                <div className="p-3 bg-white/20 dark:bg-gray-700/50 rounded-full mb-2 backdrop-blur-sm">
+                                <div className="p-4 bg-white rounded-full shadow-md mb-3 border border-gray-200">
                                     {feature.icon}
                                 </div>
                                 <h3 className="font-bold text-lg text-black dark:text-gray-100 mb-1">
@@ -61,13 +61,13 @@ const FeatureBox = () => {
 
                                 {/* Divider عمودی فقط در md به بالا */}
                                 {index < features.length - 1 && (
-                                    <div className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 h-20 w-px bg-gray-300/50 dark:bg-gray-600/50" />
+                                    <div className="hidden md:block absolute left-0 top-1/2 transform -translate-y-1/2 h-20 w-px bg-green-300" />
                                 )}
                             </motion.div>
 
                             {/* Divider افقی فقط در موبایل و تبلت */}
                             {index < features.length - 1 && (
-                                <div className="sm:hidden w-full h-px bg-gray-300/50 dark:bg-gray-600/50 my-4" />
+                                <div className="sm:hidden w-full h-px bg-green-300 my-4" />
                             )}
                         </React.Fragment>
                     ))}

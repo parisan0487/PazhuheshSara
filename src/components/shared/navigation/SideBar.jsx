@@ -43,21 +43,20 @@ export default function Sidebar() {
             {/* لایه تیره زمینه */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+                    className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
                     onClick={() => setIsOpen(false)}
                 ></div>
             )}
 
-            {/* سایدبار شیشه‌ای */}
+            {/* سایدبار روشن */}
             <div
                 className={clsx(
                     "fixed top-0 right-0 w-[300px] h-full z-50 px-5 py-6 flex flex-col",
-                    "backdrop-blur-2xl bg-white/5 border-l border-white/10 shadow-2xl",
+                    "backdrop-blur-xl bg-white border-l border-gray-200 shadow-2xl",
                     "transition-transform duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)]",
                     isOpen ? "translate-x-0" : "translate-x-full"
                 )}
             >
-
                 <div className="flex justify-end">
                     <X
                         className="text-[#019297] cursor-pointer"
@@ -66,14 +65,13 @@ export default function Sidebar() {
                     />
                 </div>
 
-
                 <ul className="flex flex-col gap-3 mt-4">
                     {navItems.map((item, index) => (
                         <li key={index}>
                             <Link
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className="block text-black text-lg px-4 py-2 rounded-xl hover:bg-[#019297]/30 transition duration-300"
+                                className="block text-gray-800 text-lg px-4 py-2 rounded-xl hover:bg-[#019297]/10 transition duration-300"
                             >
                                 {item.title}
                             </Link>
@@ -81,17 +79,16 @@ export default function Sidebar() {
                     ))}
                 </ul>
 
-
                 <div className="mt-auto">
                     {role === "admin" ? (
                         <Link href="/admin" onClick={() => setIsOpen(false)}>
-                            <button className="w-full py-3 rounded-3xl bg-gradient-to-r from-[#019297] to-[#72ED7C] text-black font-semibold text-lg hover:scale-[1.03] transition">
+                            <button className="w-full py-3 rounded-3xl bg-gradient-to-r from-[#019297] to-[#72ED7C] text-white font-semibold text-lg hover:scale-[1.03] transition">
                                 پنل ادمین
                             </button>
                         </Link>
                     ) : (
                         <Link href="/contact" onClick={() => setIsOpen(false)}>
-                            <button className="w-full py-3 rounded-3xl bg-gradient-to-r from-[#019297] to-[#72ED7C] text-black font-semibold text-lg hover:scale-[1.03] transition">
+                            <button className="w-full py-3 rounded-3xl bg-gradient-to-r from-[#019297] to-[#72ED7C] text-white font-semibold text-lg hover:scale-[1.03] transition">
                                 نوبت دهی
                             </button>
                         </Link>

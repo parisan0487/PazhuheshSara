@@ -8,13 +8,10 @@ export default function Counseling() {
         <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.8 }}
+            transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className="mt-60 rounded-3xl overflow-hidden relative text-white py-16 w-full mb-10 md:mt-[-60px] px-4 md:bg-center"
+            className="rounded-3xl overflow-hidden relative py-12 w-full mb-10 px-6 bg-gradient-to-r from-green-50 to-teal-50"
         >
-            {/* لایه تیره روی بک‌گراند */}
-            <div className="sm:bg-black/70 bg-black/50 w-full h-full absolute top-0 left-0" />
-
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -22,26 +19,29 @@ export default function Counseling() {
                 viewport={{ once: true }}
                 className="relative z-10 text-center max-w-2xl mx-auto"
             >
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">نوبت‌دهی پژوهش‌سرا</h2>
-                <p className="mb-6 text-lg">
+                <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-gray-800">
+                    نوبت‌دهی پژوهش‌سرا
+                </h2>
+                <p className="mb-8 text-lg text-gray-600">
                     برای مشاهده و رزرو وقت‌های خالی، روی دکمه زیر کلیک کنید
                 </p>
 
                 <Link
                     href="/reservations"
-                    className="bg-green-400 text-black w-40 py-3 mx-auto rounded-xl hover:bg-green-500 transition font-semibold flex items-center gap-2 justify-center"
+                    className="bg-gradient-to-r from-teal-500 to-green-400 text-white w-44 py-3 mx-auto rounded-xl hover:shadow-lg hover:scale-105 transition transform font-semibold flex items-center gap-2 justify-center"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-6 h-6"
-                        fill="white"
+                        fill="none"
                         stroke="currentColor"
+                        strokeWidth="2"
                         viewBox="0 0 32 32"
                     >
                         <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            d="M2.66683 15.9791C2.66683 16.7804 3.06891 17.5816 3.87307 17.9823C6.5536 19.5848 11.6466 22.3892 15.3993 24.2587C18.616 25.8612 23.0388 27.7308 26.1215 29.0663C26.3895 29.1998 26.7916 29.3333 27.0596 29.3333C27.5957 29.3333 28.2659 29.0663 28.668 28.6656C29.3381 27.9979 29.4721 27.0631 29.2041 26.1283L26.3895 17.8487C26.2555 17.3146 25.7194 17.0475 25.1833 17.0475H18.4819C17.9458 17.0475 17.4097 16.6468 17.4097 15.9791C17.4097 15.3114 17.8118 14.9108 18.4819 14.9108H25.1833C25.7194 14.9108 26.2555 14.5102 26.3895 13.976L29.2041 5.69641C29.4721 4.89515 29.3381 3.96036 28.5339 3.29265C27.8638 2.62494 26.9256 2.4914 26.1215 2.89202C23.575 3.96036 18.75 6.09703 15.3993 7.69954C11.6466 9.56912 6.5536 12.507 3.87307 13.976C3.06891 14.3766 2.66683 15.1779 2.66683 15.9791Z"
+                            d="M2.7 16c0 .8.4 1.6 1.2 2 2.7 1.6 7.8 4.4 11.5 6.3 3.2 1.6 7.6 3.5 10.7 4.9.3.1.7.2 1 .2.6 0 1.2-.3 1.6-.7.6-.6.7-1.5.5-2.3l-2.8-8.2c-.1-.5-.7-.8-1.2-.8h-6.7c-.7 0-1.2-.4-1.2-1.1s.5-1.1 1.2-1.1h6.7c.5 0 1.1-.3 1.2-.8l2.8-8.3c.2-.8 0-1.7-.6-2.3-.6-.6-1.5-.7-2.3-.3-2.5 1.1-7.4 3.2-10.7 4.9-3.7 1.9-8.8 4.7-11.5 6.3-.8.5-1.2 1.2-1.2 2z"
                         />
                     </svg>
                     دریافت نوبت
