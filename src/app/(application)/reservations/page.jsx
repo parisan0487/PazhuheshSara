@@ -98,7 +98,7 @@ export default function ReservationUser() {
       showMessage("❌ لطفا خطاهای فرم را برطرف کنید");
       return;
     }
-    if (!selectedDate || !confirmed) {
+    if (!selectedDate) {
       showMessage("❌ لطفا تاریخ را انتخاب و تایید کنید");
       return;
     }
