@@ -27,7 +27,7 @@ export default function ReservationUser() {
   const [selectedHall, setSelectedHall] = useState("");
   const [grade, setGrade] = useState("");
   const [gender, setGender] = useState("");
-  const [studentCount, setStudentCount] = useState("");
+  const [studentCount, setStudentCount] = useState(0);
   const [availableSlots, setAvailableSlots] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -230,16 +230,16 @@ export default function ReservationUser() {
       setSelectedTime("");
 
 
-      setFullName("");
-      setSchoolName("");
-      setPhone("");
-      setSelectedDate("");
-      setSelectedTime("");
-      setSelectedHall("");
-      setGrade("");
-      setGender("");
-      setStudentCount("")
-      setErrors({});
+      // setFullName("");
+      // setSchoolName("");
+      // setPhone("");
+      // setSelectedDate("");
+      // setSelectedTime("");
+      // setSelectedHall("");
+      // setGrade("");
+      // setGender("");
+      setStudentCount(0)
+      // setErrors({});
     } catch (err) {
       showMessage("❌ " + err.message);
     } finally {
@@ -345,19 +345,23 @@ export default function ReservationUser() {
           <input
             type="text"
             placeholder="تعداد دانش‌آموزان"
-            value={studentCount}
+            value={studentCount === 0 ? "" : studentCount} // صفر نشون داده نشه
             onChange={(e) => {
               const toEnglishDigits = (str) =>
                 str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
 
               const englishValue = toEnglishDigits(e.target.value);
+
+              // فقط اعداد 0 تا 999
               if (/^\d{0,3}$/.test(englishValue)) {
-                setStudentCount(englishValue);
+                const numberValue = Number(englishValue);
+                setStudentCount(numberValue);
+
+                // اعتبارسنجی: باید حداقل 1 باشه
                 setErrors({
                   ...errors,
-                  studentCount: englishValue
-                    ? ""
-                    : "تعداد دانش‌آموزان را وارد کنید",
+                  studentCount:
+                    numberValue > 0 ? "" : "تعداد دانش‌آموزان باید بیشتر از صفر باشد",
                 });
               }
             }}
