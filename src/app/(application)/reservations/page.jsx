@@ -238,7 +238,7 @@ export default function ReservationUser() {
       setSelectedHall("");
       setGrade("");
       setGender("");
-      studentCount("")
+      setStudentCount("")
       setErrors({});
     } catch (err) {
       showMessage("❌ " + err.message);
