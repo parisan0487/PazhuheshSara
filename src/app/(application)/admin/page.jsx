@@ -13,6 +13,7 @@ export default function AdminPage() {
 
     const links = [
         { href: '/admin/reservation', label: "🗓️نوبت ها" },
+        { href: '/admin/hall', label: "🏟️سالن ها" },
         { href: '/admin/blog', label: '📰 مدیریت مقالات' },
         { href: '/admin/change-password', label: '🔒 تغییر رمز عبور' },
     ];
@@ -23,7 +24,7 @@ export default function AdminPage() {
                 خوش اومدی 👋
             </h1>
             <p className="text-gray-400 mb-10 text-sm sm:text-base">
-                اینجا می‌توانید مدیریت مقالات، نوبت هاو کاربران را به آسانی انجام دهید
+                اینجا می‌توانید مدیریت مقالات، نوبت هاو سالن ها را به آسانی انجام دهید
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 text-center">

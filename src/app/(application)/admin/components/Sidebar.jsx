@@ -6,6 +6,7 @@ import { Menu, X } from 'lucide-react';
 
 const links = [
     { href: '/admin/reservation', label: "نوبت ها" },
+    { href: '/admin/hall', label: "سالن ها" },
     { href: '/admin/blog', label: 'مقالات' },
     { href: '/admin/change-password', label: "تغییر رمز" },
 ];
@@ -23,7 +24,7 @@ export default function Sidebar() {
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
     return (
-        <aside className="bg-gray-200 border border-gray-200 rounded-lg sm:h-96 h-auto shadow-sm w-full sm:w-64">
+        <aside className="bg-gray-200 border border-gray-200 rounded-lg sm:h-96 mb-10 h-auto shadow-sm w-full sm:w-64">
             <div className="flex flex-col p-4 gap-4 h-full relative">
                 {/* Header */}
                 <div className="flex justify-between items-center sm:block">

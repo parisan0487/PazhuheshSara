@@ -4,6 +4,9 @@ import moment from "moment-jalaali";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
+import GradeSelect from "@/ui/GradeSelect";
+import HallSelect from "@/ui/HallSelect";
+import GenderSelect from "@/ui/GenderSelect";
 
 export default function ReservationUser() {
   const [fullName, setFullName] = useState("");
@@ -20,48 +23,123 @@ export default function ReservationUser() {
     "11:00 - 12:00",
     "13:00 - 14:00",
   ]);
+  const [halls, setHalls] = useState([]);
+  const [selectedHall, setSelectedHall] = useState("");
+  const [grade, setGrade] = useState("");
+  const [gender, setGender] = useState("");
+  const [studentCount, setStudentCount] = useState("");
   const [availableSlots, setAvailableSlots] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [confirmed, setConfirmed] = useState(false);
+  const [allowedGender, setAllowedGender] = useState("")
 
   // مدال راهنما
   const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [guideStep, setGuideStep] = useState(0);
+  const [isWeekInfoOpen, setIsWeekInfoOpen] = useState(false);
+
 
   const guideSteps = [
-    { title: "مرحله اول", body: "ابتدا اطلاعات شخصی (نام، مدرسه و شماره تماس) را وارد کنید." },
-    { title: "مرحله دوم", body: "تاریخ موردنظر را از تقویم انتخاب و تایید کنید.  (لطفا از انتخاب تاریخ های گذشته خود داری کنید واگرنه ثبت نوبت شما بیهوده خواهد بود)." },
-    { title: "مرحله سوم", body: "یکی از ساعت‌های آزاد را انتخاب کنید." },
-    { title: "مرحله چهارم", body: "در پایان با دکمه «تایید نهایی» رزرو خود را ثبت کنید." },
+    {
+      title: "مرحله اول: وارد کردن اطلاعات شخصی",
+      body: `
+📌 لطفا نام و نام خانوادگی، نام مدرسه و شماره تلفن خود را وارد کنید.
+⚠️ توجه: حتماً اطلاعات صحیح باشد، زیرا برای تماس یا تایید رزرو استفاده خواهد شد.
+`
+    },
+    {
+      title: "مرحله دوم: انتخاب سالن، مقطع و جنسیت",
+      body: `
+🏫 سالن موردنظر خود را از بین گزینه‌ها انتخاب کنید.
+🗓️ توجه: هر سالن فقط در روزهای مشخصی باز است. برای اطلاع از روزهای باز، از دکمه "اطلاعات این هفته" استفاده کنید.
+🎓 مقطع تحصیلی دانش‌آموزان را انتخاب کنید.
+👧👦 جنسیت دانش‌آموزان هم باید مشخص شود.
+`
+    },
+    {
+      title: "مرحله سوم: انتخاب تاریخ و ساعت",
+      body: `
+📅 با تقویم تاریخ موردنظر خود را وارد کنید.
+🟢 توجه: هر هفته یا مخصوص دختران است یا پسران. پس از انتخاب تاریخ، متن زیر جدول مشخص می‌کند.
+⏰ ساعت مدنظر خود را انتخاب کنید. ساعت‌هایی که خاکستری هستند، قبلاً رزرو شده و قابل انتخاب نیستند.
+`
+    },
+    {
+      title: "مرحله چهارم: تایید نهایی رزرو",
+      body: `
+✅ پس از وارد کردن همه اطلاعات (جنسیت، تاریخ، سالن و ساعت)، روی دکمه «تایید نهایی رزرو» کلیک کنید.
+🎉 اگر همه موارد درست باشند، پیام موفقیت نمایش داده می‌شود.
+❌ در غیر این صورت پیام خطا نمایش داده می‌شود.
+`
+    },
   ];
+
+
 
   const openGuide = () => { setIsGuideOpen(true); setGuideStep(0); };
   const closeGuide = () => setIsGuideOpen(false);
   const handleNextGuide = () => { if (guideStep < guideSteps.length - 1) setGuideStep(guideStep + 1); else closeGuide(); };
   const handlePrevGuide = () => { if (guideStep > 0) setGuideStep(guideStep - 1); };
 
-  const toEnglishDigits = (str) => str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString());
+  const toEnglishDigits = (str) => str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString());// اعداد به انگلیسی
+  const toPersianDigits = (str) => { const persianDigits = "۰۱۲۳۴۵۶۷۸۹"; return str.replace(/\d/g, (d) => persianDigits[d]); };//اعداد به فارسی
+
+
+  useEffect(() => {
+    setSelectedTime("");
+  }, [selectedHall]);
+
+
+  useEffect(() => {
+    if (selectedDate) {
+      const englishDate = toEnglishDigits(selectedDate);
+      const weekNumber = moment(englishDate, "jYYYY/jMM/jDD").jWeek();
+      const gender = weekNumber % 2 === 0 ? "female" : "male";
+      setAllowedGender(gender);
+    } else {
+      setAllowedGender("");
+    }
+  }, [selectedDate]);
+
+
 
   const fetchReservations = async (date) => {
     if (!date) return;
     setLoading(true);
+
     try {
       const res = await fetch(`/api/admin/reservations?jDate=${date}`);
       const data = await res.json();
+
       if (!res.ok) throw new Error(data.error || "خطا در دریافت نوبت‌ها");
 
-      const map = {};
-      data.reservations.filter((r) => r.jDate === date).forEach((r) => {
-        map[r.time] = true;
+      // ساختار درست: availableSlots = { hallId: { time: true } }
+      const slots = {};
+
+      data.reservations.forEach((r) => {
+        const reservationDate = toEnglishDigits(r.jDate); // تبدیل تاریخ رزرو به انگلیسی
+        const selected = toEnglishDigits(date);          // تبدیل تاریخ انتخاب شده به انگلیسی
+
+
+        if (reservationDate === selected) {
+          const hallId = typeof r.hall === "object" ? String(r.hall._id) : String(r.hall);
+
+          if (!slots[hallId]) slots[hallId] = {};
+          slots[hallId][r.time] = true;
+        }
       });
-      setAvailableSlots(map);
+
+      setAvailableSlots(slots);
+
     } catch (err) {
       showMessage("❌ " + err.message);
     } finally {
       setLoading(false);
     }
   };
+
+
+
 
   useEffect(() => {
     if (selectedDate) fetchReservations(selectedDate);
@@ -71,6 +149,21 @@ export default function ReservationUser() {
     setMessage(msg);
     setTimeout(() => setMessage(""), 3000);
   };
+
+
+  useEffect(() => {
+    const fetchHalls = async () => {
+      try {
+        const res = await fetch("/api/admin/halls");
+        const data = await res.json();
+        setHalls(data.halls || []);
+      } catch (err) {
+        showMessage("❌ خطا در دریافت سالن‌ها");
+      }
+    };
+    fetchHalls();
+  }, []);
+
 
   // --- ولیدیشن ---
   const validateFullName = (value) => {
@@ -85,6 +178,7 @@ export default function ReservationUser() {
     if (!/^\d{11}$/.test(value)) return "شماره تماس باید دقیقا ۱۱ رقم باشد";
     return "";
   };
+
 
   const handleFinalSubmit = async () => {
     const newErrors = {
@@ -109,6 +203,8 @@ export default function ReservationUser() {
 
     setLoading(true);
     setMessage("");
+
+    const studentCountNumber = Number(studentCount);
     try {
       const res = await fetch("/api/admin/reservations", {
         method: "POST",
@@ -120,6 +216,10 @@ export default function ReservationUser() {
           jDate: selectedDate,
           gDate: moment(selectedDate, "jYYYY/jMM/jDD").startOf("day").toISOString(),
           time: selectedTime,
+          hall: selectedHall,
+          grade,
+          gender,
+          studentCount: studentCountNumber,
         }),
       });
       const data = await res.json();
@@ -128,6 +228,18 @@ export default function ReservationUser() {
       showMessage("✅ نوبت با موفقیت ثبت شد!");
       fetchReservations(selectedDate);
       setSelectedTime("");
+
+
+      setFullName("");
+      setSchoolName("");
+      setPhone("");
+      setSelectedDate("");
+      setSelectedTime("");
+      setSelectedHall("");
+      setGrade("");
+      setGender("");
+      studentCount("")
+      setErrors({});
     } catch (err) {
       showMessage("❌ " + err.message);
     } finally {
@@ -144,14 +256,21 @@ export default function ReservationUser() {
       <div className="w-full max-w-lg bg-white p-8 rounded-3xl shadow-2xl space-y-6 relative border border-gray-200">
 
         {/* دکمه راهنما */}
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-end mb-4 gap-2">
           <button
             onClick={openGuide}
             className="px-4 py-2 rounded-xl bg-green-100 text-green-700 font-semibold shadow-md hover:bg-green-200 transition"
           >
             راهنمایی
           </button>
+          <button
+            onClick={() => setIsWeekInfoOpen(true)}
+            className="px-4 py-2 rounded-xl bg-green-100 text-green-700 font-semibold shadow-md hover:bg-green-200 transition"
+          >
+            اطلاعات سالن ها
+          </button>
         </div>
+
 
         {/* نام */}
         <div>
@@ -202,9 +321,59 @@ export default function ReservationUser() {
           {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
         </div>
 
-        {/* انتخاب تاریخ */}
+        {/* انتخاب سالن */}
         <div>
-          <h3 className="mb-2 font-semibold text-lg text-gray-800">انتخاب تاریخ</h3>
+          <HallSelect
+            selected={selectedHall}
+            setSelected={setSelectedHall}
+            halls={halls}
+          />
+        </div>
+
+        {/* مقطع تحصیلی */}
+        <div>
+          <GradeSelect selected={grade} setSelected={setGrade} />
+        </div>
+
+        {/* جنسیت */}
+        <div>
+          <GenderSelect selected={gender} setSelected={setGender} />
+        </div>
+
+        {/* تعداد دانش‌آموزان */}
+        <div>
+          <input
+            type="text"
+            placeholder="تعداد دانش‌آموزان"
+            value={studentCount}
+            onChange={(e) => {
+              const toEnglishDigits = (str) =>
+                str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+
+              const englishValue = toEnglishDigits(e.target.value);
+              if (/^\d{0,3}$/.test(englishValue)) {
+                setStudentCount(englishValue);
+                setErrors({
+                  ...errors,
+                  studentCount: englishValue
+                    ? ""
+                    : "تعداد دانش‌آموزان را وارد کنید",
+                });
+              }
+            }}
+            maxLength={3}
+            className="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-inner placeholder-gray-400 transition-all"
+          />
+          {errors.studentCount && (
+            <p className="text-red-500 text-sm mt-1">{errors.studentCount}</p>
+          )}
+        </div>
+
+
+        {/* انتخاب تاریخ */}
+        <div className="bg-gray-50 p-4 rounded-2xl shadow-inner border border-gray-200 space-y-3">
+          <h3 className="text-lg font-semibold text-gray-800">انتخاب تاریخ</h3>
+
           <DatePicker
             calendar={persian}
             locale={persian_fa}
@@ -213,55 +382,64 @@ export default function ReservationUser() {
               if (date) {
                 const jDate = date.format("YYYY/MM/DD");
                 setSelectedDate(jDate);
-                setConfirmed(false);
               }
             }}
             placeholder="انتخاب تاریخ..."
-            className="custom-calendar w-full rounded-xl border border-gray-300 p-3 shadow-inner transition-all focus:ring-2 focus:ring-green-400"
+            className="w-full rounded-xl border border-gray-300 p-3 shadow-inner focus:ring-2 focus:ring-green-400 transition-all"
             style={{ backgroundColor: "white" }}
           />
 
-         
+          {selectedDate ? (
+            <p className="text-sm text-gray-700">
+              <span className="font-semibold">این هفته مخصوص: </span>
+              <span className="text-green-600">
+                {allowedGender === "female" ? "پسران" : "دختران"}
+              </span>
+            </p>
+          ) : (
+            <p className="text-sm text-gray-400">⏳ ابتدا یک تاریخ انتخاب کنید</p>
+          )}
         </div>
 
+
         {/* تایم‌ها */}
-        
-          <div>
-            <h3 className="mb-2 font-semibold text-lg text-gray-800">ساعات موجود</h3>
-            <div className="grid grid-cols-3 gap-3">
-              {times.map((time) => {
-                const isReserved = availableSlots[time];
-                const isSelected = selectedTime === time;
-                return (
-                  <button
-                    key={time}
-                    disabled={isReserved || loading}
-                    onClick={() => setSelectedTime(time)}
-                    className={`text-sm p-3 rounded-2xl font-medium transition-all shadow-md border ${isReserved
+        <div>
+          <h3 className="mb-2 font-semibold text-lg text-gray-800">ساعات موجود</h3>
+          <div className="grid grid-cols-3 gap-3">
+            {times.map((time) => {
+              const isReserved = Boolean(availableSlots[selectedHall]?.[time]);
+              const isSelected = selectedTime === time;
+
+              return (
+                <button
+                  key={time}
+                  disabled={isReserved || loading || !selectedHall}
+                  onClick={() => setSelectedTime(time)}
+                  className={`text-sm p-3 rounded-2xl font-medium transition-all shadow-md border
+            ${isReserved
                       ? "bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300"
                       : isSelected
                         ? "bg-green-700 text-white border-green-800 scale-110 shadow-lg"
                         : "bg-green-500 hover:bg-green-600 text-white border-green-600"
-                      }`}
-                  >
-                    {time} {isReserved ? "❌" : ""}
-                  </button>
-                );
-              })}
-            </div>
+                    }`}
+                >
+                  {toPersianDigits(time)}
+                </button>
+              );
+            })}
           </div>
-        
+        </div>
+
 
         {/* تایید نهایی */}
-        
-          <button
-            onClick={handleFinalSubmit}
-            disabled={loading}
-            className="mt-6 w-full px-5 py-4 rounded-3xl bg-green-600 hover:bg-green-700 text-white font-extrabold shadow-lg transition-transform hover:scale-105"
-          >
-            تایید نهایی رزرو
-          </button>
-      
+        <button
+          onClick={handleFinalSubmit}
+          disabled={loading}
+          className="mt-6 w-full px-5 py-4 rounded-3xl bg-green-600 hover:bg-green-700 text-white font-extrabold shadow-lg transition-transform hover:scale-105"
+        >
+          تایید نهایی رزرو
+        </button>
+
 
         {loading && <p className="mt-4 text-center text-green-600 font-medium animate-pulse">در حال پردازش...</p>}
         {message && (
@@ -270,6 +448,58 @@ export default function ReservationUser() {
           </p>
         )}
       </div>
+
+      {/* جدول اطلاعات هفته */}
+      {isWeekInfoOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="relative bg-white rounded-3xl p-6 max-w-md w-full text-right text-gray-800 shadow-2xl transform transition-all duration-300 scale-95 animate-fade-in">
+            <h3 className="text-2xl font-bold mb-3 text-green-700">اطلاعات سالن ها</h3>
+
+            <table className="w-full border border-gray-700 rounded-lg overflow-hidden text-center text-sm bg-gray-50 shadow-lg">
+              <thead className="bg-green-200 text-gray-900 font-semibold">
+                <tr>
+                  <th className="border border-gray-400 px-3 py-2">سالن</th>
+                  <th className="border border-gray-400 px-3 py-2">روزهای باز</th>
+                </tr>
+              </thead>
+              <tbody>
+                {halls.length > 0 ? (
+                  halls.map((hall) => (
+                    <tr key={hall._id} className="hover:bg-green-50 transition-colors">
+                      <td className="border border-gray-400 px-3 py-2 font-medium">{hall.name}</td>
+                      <td className="border border-gray-400 px-3 py-2">
+                        {hall.availableDays && hall.availableDays.length > 0
+                          ? hall.availableDays.join("، ")
+                          : "—"}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="2" className="p-3 text-gray-600 font-medium">
+                      هیچ سالنی ثبت نشده
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={() => setIsWeekInfoOpen(false)}
+                className="px-5 py-2 rounded-xl bg-green-500 text-white hover:bg-green-600"
+              >
+                بستن
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
 
       {/* ---------- Modal Guide ---------- */}
       {isGuideOpen && (
@@ -281,7 +511,7 @@ export default function ReservationUser() {
         >
           <div className="relative bg-gray-900 rounded-3xl p-6 max-w-md w-full text-right text-white shadow-2xl transform transition-all duration-300 scale-95 animate-fade-in">
             {/* عنوان مرحله */}
-            <h3 id="guide-title" className="text-2xl font-bold mb-3">
+            <h3 id="guide-title" className="text-xl font-bold mb-3">
               {guideSteps[guideStep].title}
             </h3>
 

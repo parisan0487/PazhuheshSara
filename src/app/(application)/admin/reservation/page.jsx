@@ -61,7 +61,6 @@ export default function AdminPanelModern() {
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || "خطا در دریافت نوبت‌ها");
             setReservations(data.reservations);
-            console.log("رزروها (خام):", data.reservations);
         } catch (err) {
             console.error(err);
         } finally {
@@ -81,8 +80,6 @@ export default function AdminPanelModern() {
             const normalized = normalizeJDate(r.jDate);
             const jDate = moment(normalized, "jYYYY/jMM/jDD");
 
-            console.log("تاریخ اصلی:", r.jDate, " → بعد از نرمالایز:", normalized);
-
             return jDate.isBetween(
                 start.clone().subtract(1, "day"),
                 end.clone().add(1, "day")
@@ -99,7 +96,7 @@ export default function AdminPanelModern() {
 
         return (
             <div className="overflow-x-auto mt-3">
-                <table className="w-full min-w-[600px] border-collapse text-center">
+                <table className="w-full min-w-[700px] border-collapse text-center">
                     <thead>
                         <tr className="bg-gray-200">
                             <th className="border p-3">تاریخ</th>
@@ -107,6 +104,10 @@ export default function AdminPanelModern() {
                             <th className="border p-3">نام</th>
                             <th className="border p-3">مدرسه</th>
                             <th className="border p-3">شماره تماس</th>
+                            <th className="border p-3">سالن</th>
+                            <th className="border p-3">مقطع</th>
+                            <th className="border p-3">جنسیت</th>
+                             <th className="border p-3">تعداد دانش آموزان</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -120,6 +121,10 @@ export default function AdminPanelModern() {
                                 <td className="border p-2">{r.fullName}</td>
                                 <td className="border p-2">{r.schoolName}</td>
                                 <td className="border p-2">{toEnglishDigits(r.phone)}</td>
+                                <td className="border p-2">{r.hall?.name || "نامشخص"}</td>
+                                <td className="border p-2">{r.grade}</td>
+                                <td className="border p-2">{r.gender === "male" ? "پسر" : r.gender === "female" ? "دختر" : ""}</td>
+                                <td className="border p-2">{r.studentCount}</td>
                             </tr>
                         ))}
                     </tbody>

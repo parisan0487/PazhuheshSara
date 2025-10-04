@@ -18,13 +18,9 @@ export async function POST(req) {
             return NextResponse.json({ message: "کاربر یافت نشد" }, { status: 404 });
         }
 
-        console.log(password)
-        console.log(user)
-
 
         // حذف فضای اضافی و مقایسه با bcrypt
         const isMatch = await bcrypt.compare(password.trim(), user.password);
-        console.log(isMatch)
         if (!isMatch) {
             return NextResponse.json({ message: "رمز عبور اشتباه است" }, { status: 401 });
         }

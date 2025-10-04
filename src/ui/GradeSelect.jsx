@@ -1,0 +1,35 @@
+import { Listbox } from "@headlessui/react";
+import { Fragment } from "react";
+import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+
+const grades = [
+    "مهدکودک", "پیش‌دبستانی", "اول", "دوم", "سوم", "چهارم", "پنجم", "ششم",
+    "هفتم", "هشتم", "نهم", "دهم", "یازدهم", "دوازدهم"
+];
+
+export default function GradeSelect({ selected, setSelected }) {
+    return (
+        <Listbox value={selected} onChange={setSelected}>
+            <div className="relative w-full">
+                <Listbox.Button className="w-full p-4 text-right bg-white border border-gray-300 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 flex justify-between items-center">
+                    {selected || "انتخاب مقطع"}
+                    <ChevronUpDownIcon className="w-5 h-5 text-gray-400" />
+                </Listbox.Button>
+                <Listbox.Options className="absolute mt-1 w-full bg-white shadow-lg max-h-60 rounded-2xl py-1 text-right overflow-auto z-50">
+                    {grades.map((grade) => (
+                        <Listbox.Option
+                            key={grade}
+                            value={grade}
+                            className={({ active, selected }) =>
+                                `cursor-pointer select-none relative py-2 px-4 ${active ? "bg-green-100 text-green-800" : "text-gray-800"
+                                } ${selected ? "font-bold" : "font-normal"}`
+                            }
+                        >
+                            {grade}
+                        </Listbox.Option>
+                    ))}
+                </Listbox.Options>
+            </div>
+        </Listbox>
+    );
+}

@@ -30,32 +30,36 @@ const cardVariants = {
     }),
 };
 
-// دیتا رو دستی تعریف می‌کنیم
+
 const projects = [
-    {
-        id: 1,
-        title: "فضای پژوهش‌سرا",
-        image: "/images/research1.jpg",
-        url: "#",
-        content: "نمایی از فضای داخلی پژوهش‌سرا برای فعالیت‌های علمی و پژوهشی.",
-    },
-    {
-        id: 2,
-        title: "آزمایشگاه",
-        image: "/images/research2.jpg",
-        url: "#",
-        content: "بخشی از آزمایشگاه پژوهش‌سرا که دانش‌آموزان در آن پروژه‌های علمی انجام می‌دهند.",
-    },
-    {
-        id: 3,
-        title: "کارگاه",
-        image: "/images/research3.jpg",
-        url: "#",
-        content: "کارگاه پژوهش‌سرا با امکانات لازم برای ساخت و طراحی پروژه‌های دانش‌آموزی.",
-    },
+  {
+    id: 1,
+    title: "سالن افلاک نما",
+    image: "/img/aflack.jpg",
+    content: "سالن افلاک نما با تمام امکانات لازم برای اجرای پروژه‌های دانش‌آموزی.",
+  },
+  {
+    id: 2,
+    title: "آزمایشگاه زیست",
+    image: "/img/zist.jpg",
+    content: "بخشی از آزمایشگاه پژوهش‌سرا که دانش‌آموزان در آن پروژه‌های علمی انجام می‌دهند.",
+  },
+  {
+    id: 3,
+    title: "کارگاه کامپیوتر",
+    image: "/img/com.jpg",
+    content: "کارگاه پژوهش‌سرا با امکانات کامل برای طراحی و ساخت پروژه‌های دانش‌آموزی.",
+  },
+  {
+    id: 4,
+    title: "اتاق کنفرانس",
+    image: "/img/france.jpg",
+    content: "نمایی از اتاق کنفرانس پژوهش‌سرا، مناسب برگزاری جلسات و ارائه پروژه‌ها.",
+  },
 ];
 
-export default function ProjectsSection() {
+
+export default function ResearchHallGallery() {
     return (
         <section className="py-16 px-4 text-black mb-24">
             <div className="max-w-4xl text-center mb-12">
@@ -73,11 +77,11 @@ export default function ProjectsSection() {
             </div>
 
             {/* گالری استاتیک */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
                 {projects.map((project, i) => (
                     <motion.div
                         key={project.id}
-                        className="flex flex-col bg-white/10 backdrop-blur-md rounded-xl overflow-hidden shadow-xl p-3 hover:scale-105 transition"
+                        className="flex flex-col bg-white/10 border-2 border-gray-200 backdrop-blur-md rounded-xl overflow-hidden shadow-xl p-3 hover:scale-105 transition"
                         variants={cardVariants}
                         custom={i}
                         initial="hidden"
@@ -94,7 +98,7 @@ export default function ProjectsSection() {
                         </div>
                         <h3 className="text-xl font-bold mb-2 mt-2.5 text-center">{project.title}</h3>
 
-                        <p className="text-sm text-gray-200 mb-4 leading-relaxed text-justify break-words">
+                        <p className="text-sm text-gray-600 mb-4 leading-relaxed text-justify break-words">
                             {project.content}
                         </p>
                     </motion.div>
