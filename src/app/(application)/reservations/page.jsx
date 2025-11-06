@@ -128,6 +128,7 @@ export default function ReservationUser() {
           slots[hallId][r.time] = true;
         }
       });
+      console.log("✅ slots", availableSlots);
 
       setAvailableSlots(slots);
 
@@ -140,7 +141,6 @@ export default function ReservationUser() {
       setLoading(false);
     }
   };
-  console.log("✅ AvailableSlots after fetch:", availableSlots);
 
 
 
