@@ -47,6 +47,8 @@ export async function POST(req) {
             );
         }
 
+        console.log("dayOfWeek",dayOfWeek)
+
         // 👧👦 بررسی هفته زوج/فرد برای جنسیت مجاز
         const weekNumber = moment(normalizedDate, "jYYYY/jMM/jDD").jWeek();
         const allowedGender = weekNumber % 2 === 0 ? "male" : "female";
@@ -71,6 +73,7 @@ export async function POST(req) {
 
         // ✅ gDate کاملاً معتبر
         const gDate = moment.tz(gregorianDate, "YYYY-MM-DD", "Asia/Tehran").toDate();
+        console.log("gDate",gDate)
 
         const newRes = await Reservation.create({
             fullName,
