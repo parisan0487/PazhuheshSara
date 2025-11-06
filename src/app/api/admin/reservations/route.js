@@ -3,6 +3,9 @@ import { connectDB } from '@/lib/db';
 import Reservation from "@/models/reservation";
 import Hall from "@/models/hall";
 import moment from "moment-jalaali";
+import moment from "moment-timezone";
+import "moment-jalaali";
+
 
 function toEnglishDigits(str) {
     if (!str) return str;
@@ -18,32 +21,47 @@ export async function POST(req) {
 
         const { fullName, schoolName, phone, jDate, gDate, time, hall, grade, gender, studentCount } = body;
 
+        // --- 1. بررسی فیلدهای ضروری
         if (!fullName || !schoolName || !phone || !jDate || !gDate || !time || !hall || !grade || !gender || !studentCount) {
             return NextResponse.json({ error: "تمام فیلدها الزامی هستند" }, { status: 400 });
         }
 
-        // --- 1. پیدا کردن سالن
+        // --- 2. پیدا کردن سالن
         const hallData = await Hall.findById(hall);
         if (!hallData) {
             return NextResponse.json({ error: "سالن یافت نشد" }, { status: 404 });
         }
 
-        // --- 2. چک کردن روز انتخاب‌شده
+        // --- 3. آماده‌سازی تاریخ
         const normalizedDate = toEnglishDigits(jDate);
-        const dayOfWeek = moment(normalizedDate, "jYYYY/jMM/jDD").locale("fa").format("dddd");
+
+        // 📅 محاسبه‌ی روز هفته بر اساس تایم‌زون ایران
+        const dayOfWeek = moment
+            .tz(normalizedDate, "jYYYY/jMM/jDD", "Asia/Tehran")
+            .locale("fa")
+            .format("dddd");
 
         if (!hallData.availableDays.includes(dayOfWeek)) {
-            return NextResponse.json({ error: `سالن ${hallData.name} در روز ${dayOfWeek} باز نیست` }, { status: 400 });
+            return NextResponse.json(
+                { error: `سالن ${hallData.name} در روز ${dayOfWeek} باز نیست` },
+                { status: 400 }
+            );
         }
 
-        // --- 3. چک هفته و جنسیت
-        const weekNumber = moment(normalizedDate, "jYYYY/jMM/jDD").jWeek();
+        // 👧👦 بررسی هفته‌ی زوج یا فرد برای جنسیت مجاز
+        const weekNumber = moment
+            .tz(normalizedDate, "jYYYY/jMM/jDD", "Asia/Tehran")
+            .jWeek();
+
         const allowedGender = weekNumber % 2 === 0 ? "male" : "female";
 
         if (gender !== allowedGender) {
-            return NextResponse.json({
-                error: `این هفته فقط مخصوص ${allowedGender === "female" ? "دختران" : "پسران"} است`,
-            }, { status: 400 });
+            return NextResponse.json(
+                {
+                    error: `این هفته فقط مخصوص ${allowedGender === "female" ? "دختران" : "پسران"} است`,
+                },
+                { status: 400 }
+            );
         }
 
         // --- 4. بررسی رزرو تکراری
@@ -52,13 +70,13 @@ export async function POST(req) {
             return NextResponse.json({ error: "این تایم قبلاً رزرو شده است" }, { status: 400 });
         }
 
-
+        // --- 5. اعتبارسنجی تعداد دانش‌آموزان
         const studentCountNumber = Number(studentCount);
         if (isNaN(studentCountNumber) || studentCountNumber < 1) {
             return NextResponse.json({ error: "تعداد دانش‌آموزان نامعتبر است" }, { status: 400 });
         }
 
-        // --- 5. ذخیره رزرو
+        // --- 6. ذخیره رزرو
         const newRes = await Reservation.create({
             fullName,
             schoolName,
@@ -72,8 +90,7 @@ export async function POST(req) {
             studentCount: studentCountNumber,
         });
 
-        
-        return NextResponse.json({ message: "رزرو با موفقیت ثبت شد", reservation: newRes });
+        return NextResponse.json({ message: "رزرو با موفقیت ثبت شد ✅", reservation: newRes });
     } catch (error) {
         console.error("❌ Reservation POST error:", error);
         return NextResponse.json({ error: "خطای سرور" }, { status: 500 });
