@@ -90,6 +90,17 @@ export async function POST(req) {
             return NextResponse.json({ error: "تعداد دانش‌آموزان نامعتبر است" }, { status: 400 });
         }
 
+
+        // قبل یا بعد از ذخیره رزرو جدید
+        const allReservations = await Reservation.find().populate("hall", "name");
+        console.log("📚 All reservations (raw):", allReservations);
+
+        // اگه بخوای فقط تاریخ‌ها رو ببینی
+        allReservations.forEach(r => {
+            console.log("🗓 jDate:", r.jDate, "| gDate:", r.gDate);
+        });
+
+
         // ✅ ایجاد رزرو
         const newRes = await Reservation.create({
             fullName,

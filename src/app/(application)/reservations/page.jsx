@@ -111,7 +111,7 @@ export default function ReservationUser() {
     try {
       const res = await fetch(`/api/admin/reservations?jDate=${date}`);
       const data = await res.json();
-
+      console.log("✅ datemain", date);
       if (!res.ok) throw new Error(data.error || "خطا در دریافت نوبت‌ها");
 
       // ساختار درست: availableSlots = { hallId: { time: true } }
@@ -142,8 +142,6 @@ export default function ReservationUser() {
       setLoading(false);
     }
   };
-
-
 
 
 
