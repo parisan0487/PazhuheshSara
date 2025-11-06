@@ -131,12 +131,17 @@ export default function ReservationUser() {
 
       setAvailableSlots(slots);
 
+      console.log("✅ AvailableSlots after fetch:", availableSlots);
+
+
     } catch (err) {
       showMessage("❌ " + err.message);
     } finally {
       setLoading(false);
     }
   };
+  console.log("✅ AvailableSlots after fetch:", availableSlots);
+
 
 
 

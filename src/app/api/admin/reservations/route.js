@@ -90,7 +90,7 @@ export async function POST(req) {
             return NextResponse.json({ error: "تعداد دانش‌آموزان نامعتبر است" }, { status: 400 });
         }
 
-        // ✅ ساخت و ذخیره رزرو
+        
         const newRes = await Reservation.create({
             fullName,
             schoolName,
