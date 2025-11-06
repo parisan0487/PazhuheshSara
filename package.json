@@ -43,7 +43,8 @@
     "react-tsparticles": "^2.12.0",
     "slugify": "^1.6.6",
     "streamifier": "^0.1.1",
-    "tsparticles": "^2.12.0"
+    "tsparticles": "^2.12.0",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

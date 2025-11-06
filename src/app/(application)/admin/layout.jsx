@@ -1,14 +1,14 @@
-import { cookies } from 'next/headers';
+'use client';
+
+import { useAuthStore } from '@/store/useAuthStore';
 import Sidebar from './components/Sidebar';
 
 export default function AdminLayout({ children }) {
-  const token = cookies().get('token'); // اینجا HttpOnly هم خونده میشه
-  const isAuthenticated = !!token;
-  const isAuthPage = false; // اگه خواستی مسیر لاگین رو جدا هندل کن
+  const { isAuthenticated } = useAuthStore();
 
   return (
     <div className="flex flex-col sm:flex-row min-h-screen text-black mt-10">
-      {isAuthenticated && !isAuthPage && <Sidebar />}
+      {isAuthenticated && <Sidebar />}
       <div className="flex-1 p-4 sm:p-8">
         <main>{children}</main>
       </div>

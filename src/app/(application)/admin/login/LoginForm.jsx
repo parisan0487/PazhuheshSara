@@ -2,12 +2,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export default function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const setAuth = useAuthStore((state) => state.setAuth);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -23,10 +25,14 @@ export default function LoginForm() {
         setLoading(false);
 
         if (res.ok) {
-            toast.success('ورود موفق بود');
+            toast.success('ورود موفق بود ✨');
+            // اینجا استور رو به‌روزرسانی می‌کنیم:
+            setAuth(true, data.role);
+
+            // هدایت به داشبورد
             router.push('/admin');
         } else {
-            toast.error(data.error || 'ورود ناموفق بود');
+            toast.error(data.message || 'ورود ناموفق بود');
         }
     };
 

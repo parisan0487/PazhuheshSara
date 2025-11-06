@@ -87,7 +87,7 @@ export default function Sidebar() {
                             </button>
                         </Link>
                     ) : (
-                        <Link href="/contact" onClick={() => setIsOpen(false)}>
+                        <Link href="/reservations" onClick={() => setIsOpen(false)}>
                             <button className="w-full py-3 rounded-3xl bg-gradient-to-r from-[#019297] to-[#72ED7C] text-white font-semibold text-lg hover:scale-[1.03] transition">
                                 نوبت دهی
                             </button>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const links = [
     { href: '/admin/reservation', label: "نوبت ها" },
@@ -15,10 +16,12 @@ export default function Sidebar() {
     const pathname = usePathname();
     const router = useRouter();
     const [menuOpen, setMenuOpen] = useState(false);
+    const { logout } = useAuthStore();
 
     const handleLogout = async () => {
         await fetch('/api/auth/logout', { method: 'POST' });
-        router.push('/admin/login');
+        logout();
+        window.location.href = '/admin/login';
     };
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
