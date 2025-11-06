@@ -106,6 +106,7 @@ export default function ReservationUser() {
   const fetchReservations = async (date) => {
     if (!date) return;
     setLoading(true);
+    console.log("✅ date", date);
 
     try {
       const res = await fetch(`/api/admin/reservations?jDate=${date}`);
@@ -120,7 +121,6 @@ export default function ReservationUser() {
         const reservationDate = toEnglishDigits(r.jDate); // تبدیل تاریخ رزرو به انگلیسی
         const selected = toEnglishDigits(date);          // تبدیل تاریخ انتخاب شده به انگلیسی
         console.log("✅ r.jDate", r.jDate);
-        console.log("✅ date", date);
 
         if (reservationDate === selected) {
           const hallId = typeof r.hall === "object" ? String(r.hall._id) : String(r.hall);
