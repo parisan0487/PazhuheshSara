@@ -7,7 +7,8 @@ import "moment-timezone";
 import "moment-jalaali";
 
 
-moment.loadPersian({ usePersianDigits: false });
+moment.locale("fa");
+moment.updateLocale("fa", { usePersianDigits: false });
 
 function toEnglishDigits(str) {
     if (!str) return str;
