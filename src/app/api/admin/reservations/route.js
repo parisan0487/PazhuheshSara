@@ -3,8 +3,7 @@ import { connectDB } from '@/lib/db';
 import Reservation from "@/models/reservation";
 import Hall from "@/models/hall";
 import moment from "moment-jalaali";
-import moment from "moment-timezone";
-import "moment-jalaali";
+import "moment-timezone";
 
 
 function toEnglishDigits(str) {
