@@ -2,8 +2,9 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db';
 import Reservation from "@/models/reservation";
 import Hall from "@/models/hall";
-import moment from "moment-jalaali";
+import moment from "moment";
 import "moment-timezone";
+import "moment-jalaali";
 
 
 function toEnglishDigits(str) {
