@@ -214,7 +214,7 @@ export default function ReservationUser() {
           schoolName,
           phone,
           jDate: selectedDate,
-          gDate: moment(selectedDate, "jYYYY/jMM/jDD").startOf("day").toISOString(),
+          // gDate: moment(selectedDate, "jYYYY/jMM/jDD").startOf("day").toISOString(),
           time: selectedTime,
           hall: selectedHall,
           grade,

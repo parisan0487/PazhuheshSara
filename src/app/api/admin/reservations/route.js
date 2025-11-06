@@ -19,10 +19,10 @@ export async function POST(req) {
         await connectDB();
         const body = await req.json();
 
-        const { fullName, schoolName, phone, jDate, gDate, time, hall, grade, gender, studentCount } = body;
+        const { fullName, schoolName, phone, jDate, time, hall, grade, gender, studentCount } = body;
 
         // --- 1. بررسی فیلدهای ضروری
-        if (!fullName || !schoolName || !phone || !jDate || !gDate || !time || !hall || !grade || !gender || !studentCount) {
+        if (!fullName || !schoolName || !phone || !jDate || !time || !hall || !grade || !gender || !studentCount) {
             return NextResponse.json({ error: "تمام فیلدها الزامی هستند" }, { status: 400 });
         }
 
@@ -82,7 +82,7 @@ export async function POST(req) {
             schoolName,
             phone,
             jDate: normalizedDate,
-            gDate: new Date(gDate),
+            gDate: moment.tz(normalizedDate, "jYYYY/jMM/jDD", "Asia/Tehran").toDate(),
             time,
             hall,
             grade,
