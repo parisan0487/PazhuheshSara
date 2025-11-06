@@ -21,23 +21,22 @@ export async function POST(req) {
 
         const { fullName, schoolName, phone, jDate, time, hall, grade, gender, studentCount } = body;
 
-        // --- 1. بررسی فیلدهای ضروری
         if (!fullName || !schoolName || !phone || !jDate || !time || !hall || !grade || !gender || !studentCount) {
             return NextResponse.json({ error: "تمام فیلدها الزامی هستند" }, { status: 400 });
         }
 
-        // --- 2. پیدا کردن سالن
         const hallData = await Hall.findById(hall);
         if (!hallData) {
             return NextResponse.json({ error: "سالن یافت نشد" }, { status: 404 });
         }
 
-        // --- 3. آماده‌سازی تاریخ
+        // 🔹 تاریخ شمسی به انگلیسی و بعد به میلادی
         const normalizedDate = toEnglishDigits(jDate);
+        const gregorianDate = moment(normalizedDate, "jYYYY/jMM/jDD").format("YYYY-MM-DD");
 
-        // 📅 محاسبه‌ی روز هفته بر اساس تایم‌زون ایران
+        // 📅 تعیین روز هفته بر اساس میلادی در تایم‌زون ایران
         const dayOfWeek = moment
-            .tz(normalizedDate, "jYYYY/jMM/jDD", "Asia/Tehran")
+            .tz(gregorianDate, "YYYY-MM-DD", "Asia/Tehran")
             .locale("fa")
             .format("dddd");
 
@@ -48,41 +47,37 @@ export async function POST(req) {
             );
         }
 
-        // 👧👦 بررسی هفته‌ی زوج یا فرد برای جنسیت مجاز
-        const weekNumber = moment
-            .tz(normalizedDate, "jYYYY/jMM/jDD", "Asia/Tehran")
-            .jWeek();
-
+        // 👧👦 بررسی هفته زوج/فرد برای جنسیت مجاز
+        const weekNumber = moment(normalizedDate, "jYYYY/jMM/jDD").jWeek();
         const allowedGender = weekNumber % 2 === 0 ? "male" : "female";
 
         if (gender !== allowedGender) {
             return NextResponse.json(
-                {
-                    error: `این هفته فقط مخصوص ${allowedGender === "female" ? "دختران" : "پسران"} است`,
-                },
+                { error: `این هفته فقط مخصوص ${allowedGender === "female" ? "دختران" : "پسران"} است` },
                 { status: 400 }
             );
         }
 
-        // --- 4. بررسی رزرو تکراری
+        // 🕐 بررسی رزرو تکراری
         const exist = await Reservation.findOne({ jDate: normalizedDate, time, hall });
         if (exist) {
             return NextResponse.json({ error: "این تایم قبلاً رزرو شده است" }, { status: 400 });
         }
 
-        // --- 5. اعتبارسنجی تعداد دانش‌آموزان
         const studentCountNumber = Number(studentCount);
         if (isNaN(studentCountNumber) || studentCountNumber < 1) {
             return NextResponse.json({ error: "تعداد دانش‌آموزان نامعتبر است" }, { status: 400 });
         }
 
-        // --- 6. ذخیره رزرو
+        // ✅ gDate کاملاً معتبر
+        const gDate = moment.tz(gregorianDate, "YYYY-MM-DD", "Asia/Tehran").toDate();
+
         const newRes = await Reservation.create({
             fullName,
             schoolName,
             phone,
             jDate: normalizedDate,
-            gDate: moment.tz(normalizedDate, "jYYYY/jMM/jDD", "Asia/Tehran").toDate(),
+            gDate,
             time,
             hall,
             grade,
