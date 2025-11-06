@@ -119,7 +119,8 @@ export default function ReservationUser() {
       data.reservations.forEach((r) => {
         const reservationDate = toEnglishDigits(r.jDate); // تبدیل تاریخ رزرو به انگلیسی
         const selected = toEnglishDigits(date);          // تبدیل تاریخ انتخاب شده به انگلیسی
-
+        console.log("✅ r.jDate", r.jDate);
+        console.log("✅ date", date);
 
         if (reservationDate === selected) {
           const hallId = typeof r.hall === "object" ? String(r.hall._id) : String(r.hall);
@@ -128,7 +129,7 @@ export default function ReservationUser() {
           slots[hallId][r.time] = true;
         }
       });
-      console.log("✅ slots", availableSlots);
+      console.log("✅ slots", slots);
 
       setAvailableSlots(slots);
 
