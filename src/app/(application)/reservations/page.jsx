@@ -144,6 +144,10 @@ export default function ReservationUser() {
   };
 
 
+  useEffect(() => {
+    console.log("🟢 AvailableSlots updated:", availableSlots);
+  }, [availableSlots]);
+
 
   useEffect(() => {
     if (selectedDate) fetchReservations(selectedDate);
@@ -411,11 +415,14 @@ export default function ReservationUser() {
 
 
         {/* تایم‌ها */}
+        {/* تایم‌ها */}
         <div>
           <h3 className="mb-2 font-semibold text-lg text-gray-800">ساعات موجود</h3>
           <div className="grid grid-cols-3 gap-3">
             {times.map((time) => {
-              const isReserved = Boolean(availableSlots[selectedHall]?.[time]);
+              // اگه سالن انتخاب شده هنوز ست نشده، نذار شرطش ارور بده
+              const hallSlots = availableSlots[selectedHall] || {};
+              const isReserved = Boolean(hallSlots[time]);
               const isSelected = selectedTime === time;
 
               return (
@@ -423,7 +430,7 @@ export default function ReservationUser() {
                   key={time}
                   disabled={isReserved || loading || !selectedHall}
                   onClick={() => setSelectedTime(time)}
-                  className={`text-sm p-3 rounded-2xl font-medium transition-all shadow-md border
+                  className={`text-sm p-3 rounded-2xl font-medium transition-all shadow-md border duration-200
             ${isReserved
                       ? "bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300"
                       : isSelected
@@ -437,6 +444,7 @@ export default function ReservationUser() {
             })}
           </div>
         </div>
+
 
 
         {/* تایید نهایی */}
