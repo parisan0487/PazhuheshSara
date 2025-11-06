@@ -7,6 +7,8 @@ import "moment-timezone";
 import "moment-jalaali";
 
 
+moment.loadPersian({ usePersianDigits: false });
+
 function toEnglishDigits(str) {
     if (!str) return str;
     return str
@@ -19,26 +21,47 @@ export async function POST(req) {
         await connectDB();
         const body = await req.json();
 
+        console.log("📦 [Incoming Body]", body);
+
         const { fullName, schoolName, phone, jDate, time, hall, grade, gender, studentCount } = body;
 
         if (!fullName || !schoolName || !phone || !jDate || !time || !hall || !grade || !gender || !studentCount) {
+            console.warn("⚠️ Missing field(s)", { fullName, schoolName, phone, jDate, time, hall, grade, gender, studentCount });
             return NextResponse.json({ error: "تمام فیلدها الزامی هستند" }, { status: 400 });
         }
 
         const hallData = await Hall.findById(hall);
         if (!hallData) {
+            console.warn("⚠️ Hall not found", hall);
             return NextResponse.json({ error: "سالن یافت نشد" }, { status: 404 });
         }
 
-        // 🔹 تاریخ شمسی به انگلیسی و بعد به میلادی
-        const normalizedDate = toEnglishDigits(jDate);
-        const gregorianDate = moment(normalizedDate, "jYYYY/jMM/jDD").format("YYYY-MM-DD");
+        // 🧩 بررسی jDate خام
+        console.log("🗓 Raw jDate:", jDate);
 
-        // 📅 تعیین روز هفته بر اساس میلادی در تایم‌زون ایران
-        const dayOfWeek = moment
-            .tz(gregorianDate, "YYYY-MM-DD", "Asia/Tehran")
-            .locale("fa")
-            .format("dddd");
+        const normalizedDate = toEnglishDigits(jDate);
+        console.log("🔢 Normalized jDate:", normalizedDate);
+
+        const m = moment(normalizedDate, "jYYYY/jMM/jDD", true); // strict parse
+        console.log("📅 Parsed moment (isValid):", m.isValid(), "| format:", m.format("YYYY-MM-DD"));
+
+        if (!m.isValid()) {
+            return NextResponse.json({ error: "تاریخ وارد شده معتبر نیست" }, { status: 400 });
+        }
+
+        const gregorianDate = m.format("YYYY-MM-DD");
+        console.log("🕓 gregorianDate:", gregorianDate);
+
+        const gDate = new Date(gregorianDate);
+        console.log("✅ gDate converted:", gDate);
+
+        if (isNaN(gDate.getTime())) {
+            console.error("❌ Invalid gDate generated from:", { normalizedDate, gregorianDate });
+            return NextResponse.json({ error: "تبدیل تاریخ به میلادی با خطا مواجه شد" }, { status: 500 });
+        }
+
+        const dayOfWeek = moment(gregorianDate, "YYYY-MM-DD").locale("fa").format("dddd");
+        console.log("📆 dayOfWeek:", dayOfWeek);
 
         if (!hallData.availableDays.includes(dayOfWeek)) {
             return NextResponse.json(
@@ -47,11 +70,9 @@ export async function POST(req) {
             );
         }
 
-        console.log("dayOfWeek",dayOfWeek)
-
-        // 👧👦 بررسی هفته زوج/فرد برای جنسیت مجاز
-        const weekNumber = moment(normalizedDate, "jYYYY/jMM/jDD").jWeek();
+        const weekNumber = m.jWeek();
         const allowedGender = weekNumber % 2 === 0 ? "male" : "female";
+        console.log("👫 WeekNumber:", weekNumber, "| Allowed:", allowedGender);
 
         if (gender !== allowedGender) {
             return NextResponse.json(
@@ -60,7 +81,6 @@ export async function POST(req) {
             );
         }
 
-        // 🕐 بررسی رزرو تکراری
         const exist = await Reservation.findOne({ jDate: normalizedDate, time, hall });
         if (exist) {
             return NextResponse.json({ error: "این تایم قبلاً رزرو شده است" }, { status: 400 });
@@ -70,10 +90,6 @@ export async function POST(req) {
         if (isNaN(studentCountNumber) || studentCountNumber < 1) {
             return NextResponse.json({ error: "تعداد دانش‌آموزان نامعتبر است" }, { status: 400 });
         }
-
-        // ✅ gDate کاملاً معتبر
-        const gDate = moment.tz(gregorianDate, "YYYY-MM-DD", "Asia/Tehran").toDate();
-        console.log("gDate",gDate)
 
         const newRes = await Reservation.create({
             fullName,
@@ -87,6 +103,8 @@ export async function POST(req) {
             gender,
             studentCount: studentCountNumber,
         });
+
+        console.log("✅ Reservation created successfully:", newRes._id);
 
         return NextResponse.json({ message: "رزرو با موفقیت ثبت شد ✅", reservation: newRes });
     } catch (error) {
