@@ -7,18 +7,15 @@ import "moment-timezone";
 
 // ✅ تنظیمات اولیه‌ی moment برای تقویم جلالی
 moment.locale("fa");
-if (typeof moment.loadPersian === "function") {
+if (moment.loadPersian) {
     moment.loadPersian({ usePersianDigits: false });
 }
 
-function toEnglishDigits(str = "") {
-    if (typeof str !== "string") return str;
+function toEnglishDigits(str) {
+    if (!str) return str;
     return str
-        // اعداد فارسی
         .replace(/[\u06F0-\u06F9]/g, d => String.fromCharCode(d.charCodeAt(0) - 1728))
-        // اعداد عربی
-        .replace(/[\u0660-\u0669]/g, d => String.fromCharCode(d.charCodeAt(0) - 1584))
-        .replace(/[^\d\/\-]/g, "");
+        .replace(/[\u0660-\u0669]/g, d => String.fromCharCode(d.charCodeAt(0) - 1584));
 }
 
 export async function POST(req) {
@@ -30,10 +27,12 @@ export async function POST(req) {
 
         const { fullName, schoolName, phone, jDate, time, hall, grade, gender, studentCount } = body;
 
+        // بررسی فیلدهای ضروری
         if (!fullName || !schoolName || !phone || !jDate || !time || !hall || !grade || !gender || !studentCount) {
             return NextResponse.json({ error: "تمام فیلدها الزامی هستند" }, { status: 400 });
         }
 
+        // پیدا کردن سالن
         const hallData = await Hall.findById(hall);
         if (!hallData) {
             return NextResponse.json({ error: "سالن یافت نشد" }, { status: 404 });
@@ -85,23 +84,13 @@ export async function POST(req) {
             return NextResponse.json({ error: "این تایم قبلاً رزرو شده است" }, { status: 400 });
         }
 
+        // 🔢 اعتبارسنجی تعداد دانش‌آموزان
         const studentCountNumber = Number(studentCount);
         if (isNaN(studentCountNumber) || studentCountNumber < 1) {
             return NextResponse.json({ error: "تعداد دانش‌آموزان نامعتبر است" }, { status: 400 });
         }
 
-
-        // قبل یا بعد از ذخیره رزرو جدید
-        const allReservations = await Reservation.find().populate("hall", "name");
-        console.log("📚 All reservations (raw):", allReservations);
-
-        // اگه بخوای فقط تاریخ‌ها رو ببینی
-        allReservations.forEach(r => {
-            console.log("🗓 jDate:", r.jDate, "| gDate:", r.gDate);
-        });
-
-
-        // ✅ ایجاد رزرو
+        // ✅ ساخت و ذخیره رزرو
         const newRes = await Reservation.create({
             fullName,
             schoolName,
@@ -116,6 +105,7 @@ export async function POST(req) {
         });
 
         console.log("✅ Reservation created:", newRes._id);
+
         return NextResponse.json({ message: "رزرو با موفقیت ثبت شد ✅", reservation: newRes });
 
     } catch (error) {
@@ -131,7 +121,8 @@ export async function GET(req) {
         await connectDB();
 
         const url = new URL(req.url);
-        const jDate = url.searchParams.get("jDate"); // تاریخ شمسی اگه داده شده باشه
+        let jDate = url.searchParams.get("jDate"); // تاریخ شمسی اگه داده شده باشه
+        if (jDate) jDate = toEnglishDigits(jDate);
 
         let query = {};
         if (jDate && jDate.trim()) {
@@ -143,6 +134,8 @@ export async function GET(req) {
         const reservations = await Reservation.find(query)
             .sort({ gDate: 1, time: 1 })
             .populate("hall", "name");
+
+        console.log("📚 All reservations (raw):", reservations);
 
         return NextResponse.json({ reservations });
     } catch (error) {
