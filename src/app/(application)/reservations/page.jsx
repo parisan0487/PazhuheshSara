@@ -28,6 +28,9 @@ export default function ReservationUser() {
   const [grade, setGrade] = useState("");
   const [gender, setGender] = useState("");
   const [studentCount, setStudentCount] = useState(0);
+  const [meeting, setMeeting] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
   const [availableSlots, setAvailableSlots] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -106,12 +109,10 @@ export default function ReservationUser() {
   const fetchReservations = async (date) => {
     if (!date) return;
     setLoading(true);
-    console.log("✅ date", date);
 
     try {
       const res = await fetch(`/api/admin/reservations?jDate=${date}`);
       const data = await res.json();
-      console.log("✅ datemain", date);
       if (!res.ok) throw new Error(data.error || "خطا در دریافت نوبت‌ها");
 
       // ساختار درست: availableSlots = { hallId: { time: true } }
@@ -120,7 +121,6 @@ export default function ReservationUser() {
       data.reservations.forEach((r) => {
         const reservationDate = toEnglishDigits(r.jDate); // تبدیل تاریخ رزرو به انگلیسی
         const selected = toEnglishDigits(date);          // تبدیل تاریخ انتخاب شده به انگلیسی
-        console.log("✅ r.jDate", r.jDate);
 
         if (reservationDate === selected) {
           const hallId = typeof r.hall === "object" ? String(r.hall._id) : String(r.hall);
@@ -129,11 +129,8 @@ export default function ReservationUser() {
           slots[hallId][r.time] = true;
         }
       });
-      console.log("✅ slots", slots);
 
       setAvailableSlots(slots);
-
-      console.log("✅ AvailableSlots after fetch:", availableSlots);
 
 
     } catch (err) {
@@ -142,11 +139,6 @@ export default function ReservationUser() {
       setLoading(false);
     }
   };
-
-
-  useEffect(() => {
-    console.log("🟢 AvailableSlots updated:", availableSlots);
-  }, [availableSlots]);
 
 
   useEffect(() => {
@@ -186,6 +178,10 @@ export default function ReservationUser() {
     if (!/^\d{11}$/.test(value)) return "شماره تماس باید دقیقا ۱۱ رقم باشد";
     return "";
   };
+  const validateMeeting = (value) => {
+    if (!value.trim()) return "جلسه الزامی است";
+    return "";
+  };
 
 
   const handleFinalSubmit = async () => {
@@ -193,10 +189,11 @@ export default function ReservationUser() {
       fullName: validateFullName(fullName),
       schoolName: validateSchoolName(schoolName),
       phone: validatePhone(phone),
+      meeting: validateMeeting(meeting),
     };
     setErrors(newErrors);
 
-    if (newErrors.fullName || newErrors.schoolName || newErrors.phone) {
+    if (newErrors.fullName || newErrors.schoolName || newErrors.phone || newErrors.meeting) {
       showMessage("❌ لطفا خطاهای فرم را برطرف کنید");
       return;
     }
@@ -211,6 +208,26 @@ export default function ReservationUser() {
 
     setLoading(true);
     setMessage("");
+    let imageUrl = "";
+
+    // اگه کاربر عکسی انتخاب کرده، اول آپلودش کن
+    if (image) {
+      const uploadForm = new FormData();
+      uploadForm.append("image", image);
+
+      const uploadRes = await fetch("/api/upload", {
+        method: "POST",
+        body: uploadForm,
+      });
+
+      const uploadData = await uploadRes.json();
+
+      if (!uploadRes.ok) {
+        throw new Error(uploadData.error || "خطا در آپلود تصویر");
+      }
+
+      imageUrl = uploadData.url;
+    }
 
     const studentCountNumber = Number(studentCount);
     try {
@@ -228,6 +245,9 @@ export default function ReservationUser() {
           grade,
           gender,
           studentCount: studentCountNumber,
+          meeting,
+          description,
+          image: imageUrl,
         }),
       });
       const data = await res.json();
@@ -382,6 +402,22 @@ export default function ReservationUser() {
         </div>
 
 
+        {/* جلسه */}
+        <div>
+          <input
+            type="text"
+            placeholder="جلسه (مثلا جلسه اول)"
+            value={meeting}
+            onChange={(e) => {
+              setMeeting(e.target.value);
+              setErrors({ ...errors, meeting: validateMeeting(e.target.value) });
+            }}
+            className="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-inner placeholder-gray-400 transition-all"
+          />
+          {errors.meeting && <p className="text-red-500 text-sm mt-1">{errors.meeting}</p>}
+        </div>
+
+
         {/* انتخاب تاریخ */}
         <div className="bg-gray-50 p-4 rounded-2xl shadow-inner border border-gray-200 space-y-3">
           <h3 className="text-lg font-semibold text-gray-800">انتخاب تاریخ</h3>
@@ -415,7 +451,6 @@ export default function ReservationUser() {
 
 
         {/* تایم‌ها */}
-        {/* تایم‌ها */}
         <div>
           <h3 className="mb-2 font-semibold text-lg text-gray-800">ساعات موجود</h3>
           <div className="grid grid-cols-3 gap-3">
@@ -443,6 +478,31 @@ export default function ReservationUser() {
               );
             })}
           </div>
+        </div>
+
+
+        {/* توضیحات */}
+        <div>
+          <textarea
+            placeholder="توضیحات (اختیاری)"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full p-4 rounded-xl bg-gray-50 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 shadow-inner placeholder-gray-400 transition-all"
+            rows={3}
+          />
+        </div>
+
+        {/* تصویر */}
+        <div>
+          <label className="block mb-2 font-semibold text-gray-700">
+            تصویر فیش واریزی (اختیاری)
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+            className="w-full p-3 border rounded-xl bg-gray-50"
+          />
         </div>
 
 

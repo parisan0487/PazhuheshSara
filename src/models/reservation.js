@@ -9,6 +9,9 @@ const ReservationSchema = new mongoose.Schema(
         grade: { type: String, required: true }, // مقطع تحصیلی (مثلا "دهم", "یازدهم", "دوازدهم")
         gender: { type: String, enum: ["male", "female"], required: true }, // جنسیت
         studentCount: { type: Number, required: true, min: 1, default: 1 },
+        meeting: { type: String, required: true },
+        description: { type: String },
+        image: { type: String },
 
         phone: { type: String, required: true },
         jDate: { type: String, required: true }, // تاریخ شمسی

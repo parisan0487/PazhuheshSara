@@ -23,12 +23,10 @@ export async function POST(req) {
         await connectDB();
         const body = await req.json();
 
-        console.log("📦 [Incoming Body]", body);
-
-        const { fullName, schoolName, phone, jDate, time, hall, grade, gender, studentCount } = body;
+        const { fullName, schoolName, phone, jDate, time, hall, grade, gender, studentCount, meeting, description, image } = body;
 
         // بررسی فیلدهای ضروری
-        if (!fullName || !schoolName || !phone || !jDate || !time || !hall || !grade || !gender || !studentCount) {
+        if (!fullName || !schoolName || !phone || !jDate || !time || !hall || !grade || !gender || !studentCount || !meeting) {
             return NextResponse.json({ error: "تمام فیلدها الزامی هستند" }, { status: 400 });
         }
 
@@ -40,12 +38,9 @@ export async function POST(req) {
 
         // 🔹 تبدیل تاریخ شمسی به انگلیسی
         const normalizedDate = toEnglishDigits(jDate);
-        console.log("🗓 Raw jDate:", jDate);
-        console.log("🔢 Normalized jDate:", normalizedDate);
 
         // 🔹 ساخت moment شمسی و بررسی اعتبارش
         const m = moment(normalizedDate, "jYYYY/jMM/jDD", true);
-        console.log("📅 Parsed moment (isValid):", m.isValid(), "| format:", m.format("YYYY-MM-DD"));
 
         if (!m.isValid()) {
             return NextResponse.json({ error: "تاریخ وارد شده معتبر نیست" }, { status: 400 });
@@ -53,7 +48,6 @@ export async function POST(req) {
 
         // 🔹 تبدیل به میلادی با تایم‌زون ایران
         const gDate = m.tz("Asia/Tehran").toDate();
-        console.log("🕓 gDate (converted):", gDate);
 
         // 📅 تعیین روز هفته
         const dayOfWeek = m.tz("Asia/Tehran").locale("fa").format("dddd");
@@ -102,9 +96,10 @@ export async function POST(req) {
             grade,
             gender,
             studentCount: studentCountNumber,
+            meeting,
+            description,
+            image,
         });
-
-        console.log("✅ Reservation created:", newRes._id);
 
         return NextResponse.json({ message: "رزرو با موفقیت ثبت شد ✅", reservation: newRes });
 
@@ -135,7 +130,6 @@ export async function GET(req) {
             .sort({ gDate: 1, time: 1 })
             .populate("hall", "name");
 
-        console.log("📚 All reservations (raw):", reservations);
 
         return NextResponse.json({ reservations });
     } catch (error) {
