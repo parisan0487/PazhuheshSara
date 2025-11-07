@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Reservation from "@/models/reservation";
 import Hall from "@/models/hall";
+import Holiday from "@/models/holiday";
 import moment from "moment-jalaali";
 import "moment-timezone";
 
@@ -51,7 +52,6 @@ export async function POST(req) {
 
         // 📅 تعیین روز هفته
         const dayOfWeek = m.tz("Asia/Tehran").locale("fa").format("dddd");
-        console.log("📆 dayOfWeek:", dayOfWeek);
 
         if (!hallData.availableDays.includes(dayOfWeek)) {
             return NextResponse.json(
@@ -60,16 +60,18 @@ export async function POST(req) {
             );
         }
 
-        // 👧👦 بررسی هفته زوج/فرد برای جنسیت مجاز
-        const weekNumber = m.jWeek();
-        const allowedGender = weekNumber % 2 === 0 ? "male" : "female";
-        console.log("📈 WeekNumber:", weekNumber, "| AllowedGender:", allowedGender);
 
-        if (gender !== allowedGender) {
-            return NextResponse.json(
-                { error: `این هفته فقط مخصوص ${allowedGender === "female" ? "دختران" : "پسران"} است` },
-                { status: 400 }
-            );
+        // 👧👦 بررسی جنسیت روز بر اساس اولین رزرو آن روز
+        const sameDayReservations = await Reservation.find({ jDate: normalizedDate });
+
+        if (sameDayReservations.length > 0) {
+            const dayGender = sameDayReservations[0].gender;
+            if (gender !== dayGender) {
+                return NextResponse.json(
+                    { error: `این روز مخصوص ${dayGender === "female" ? "دختران" : "پسران"} است` },
+                    { status: 400 }
+                );
+            }
         }
 
         // 🕐 بررسی رزرو تکراری
@@ -77,6 +79,26 @@ export async function POST(req) {
         if (exist) {
             return NextResponse.json({ error: "این تایم قبلاً رزرو شده است" }, { status: 400 });
         }
+
+        
+        
+        // 🗓 بررسی تعطیل رسمی بودن روز انتخاب‌شده
+        console.log("📅 Checking holiday for jDate:", normalizedDate);
+
+        const foundHoliday = await Holiday.findOne({ jDate: normalizedDate });
+        console.log("🧾 Found holiday record:", foundHoliday);
+
+        if (foundHoliday) {
+            console.log("🚫 This day is a holiday:", foundHoliday.title);
+            return NextResponse.json(
+                { error: `❌ این تاریخ (${foundHoliday.title}) تعطیل رسمی است و امکان رزرو وجود ندارد.` },
+                { status: 400 }
+            );
+        } else {
+            console.log("✅ No holiday found for this date.");
+        }
+
+
 
         // 🔢 اعتبارسنجی تعداد دانش‌آموزان
         const studentCountNumber = Number(studentCount);

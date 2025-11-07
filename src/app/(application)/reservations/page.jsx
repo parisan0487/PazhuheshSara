@@ -145,6 +145,24 @@ export default function ReservationUser() {
     if (selectedDate) fetchReservations(selectedDate);
   }, [selectedDate]);
 
+  const [dayGender, setDayGender] = useState(null);
+  const [checkingGender, setCheckingGender] = useState(false);
+
+  const checkDayGender = async (jDate) => {
+    setCheckingGender(true);
+    try {
+      const res = await fetch(`/api/admin/reservations/day-gender?jDate=${jDate}`);
+      const data = await res.json();
+      if (res.ok) setDayGender(data.gender);
+      else setDayGender(null);
+    } catch {
+      setDayGender(null);
+    } finally {
+      setCheckingGender(false);
+    }
+  };
+
+
   const showMessage = (msg) => {
     setMessage(msg);
     setTimeout(() => setMessage(""), 3000);
@@ -258,16 +276,17 @@ export default function ReservationUser() {
       setSelectedTime("");
 
 
-      setFullName("");
-      setSchoolName("");
-      setPhone("");
-      setSelectedDate("");
-      setSelectedTime("");
-      setSelectedHall("");
-      setGrade("");
-      setGender("");
+      // setFullName("");
+      // setSchoolName("");
+      // setPhone("");
+      // setSelectedDate("");
+      // setSelectedTime("");
+      // setSelectedHall("");
+      // setGrade("");
+      // setGender("");
       setStudentCount(0)
-      setErrors({});
+      // setImage("");
+      // setErrors({});
     } catch (err) {
       showMessage("❌ " + err.message);
     } finally {
@@ -430,6 +449,7 @@ export default function ReservationUser() {
               if (date) {
                 const jDate = date.format("YYYY/MM/DD");
                 setSelectedDate(jDate);
+                checkDayGender(jDate);
               }
             }}
             placeholder="انتخاب تاریخ..."
@@ -437,16 +457,26 @@ export default function ReservationUser() {
             style={{ backgroundColor: "white" }}
           />
 
+
           {selectedDate ? (
-            <p className="text-sm text-gray-700">
-              <span className="font-semibold">این هفته مخصوص: </span>
-              <span className="text-green-600">
-                {allowedGender === "female" ? "پسران" : "دختران"}
-              </span>
-            </p>
+            checkingGender ? (
+              <p className="text-sm text-gray-500">در حال بررسی...</p>
+            ) : dayGender ? (
+              <p className="text-sm text-gray-700">
+                <span className="font-semibold">این روز مخصوص: </span>
+                <span className={dayGender === "female" ? "text-pink-600" : "text-blue-600"}>
+                  {dayGender === "female" ? "دختران" : "پسران"}
+                </span>
+              </p>
+            ) : (
+              <p className="text-sm text-green-700">
+                ✅ ثبت نوبت دراین تاریخ هم برای دختران و هم برای پسران مجاز است
+              </p>
+            )
           ) : (
             <p className="text-sm text-gray-400">⏳ ابتدا یک تاریخ انتخاب کنید</p>
           )}
+
         </div>
 
 
