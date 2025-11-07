@@ -2,7 +2,15 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Holiday from "@/models/holiday";
-import { toEnglishDigits, jalaaliToGDateStartOfDay } from "@/lib/dateHelpers";
+
+
+function toEnglishDigits(str) {
+    if (!str) return str;
+    return str
+        .replace(/[\u06F0-\u06F9]/g, d => String.fromCharCode(d.charCodeAt(0) - 1728))
+        .replace(/[\u0660-\u0669]/g, d => String.fromCharCode(d.charCodeAt(0) - 1584));
+}
+
 
 export async function GET(req) {
     try {
