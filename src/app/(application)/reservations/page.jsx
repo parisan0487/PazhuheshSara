@@ -258,16 +258,16 @@ export default function ReservationUser() {
       setSelectedTime("");
 
 
-      // setFullName("");
-      // setSchoolName("");
-      // setPhone("");
-      // setSelectedDate("");
-      // setSelectedTime("");
-      // setSelectedHall("");
-      // setGrade("");
-      // setGender("");
+      setFullName("");
+      setSchoolName("");
+      setPhone("");
+      setSelectedDate("");
+      setSelectedTime("");
+      setSelectedHall("");
+      setGrade("");
+      setGender("");
       setStudentCount(0)
-      // setErrors({});
+      setErrors({});
     } catch (err) {
       showMessage("❌ " + err.message);
     } finally {
