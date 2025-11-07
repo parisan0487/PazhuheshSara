@@ -25,30 +25,26 @@ export async function GET(req) {
 
 export async function POST(req) {
     try {
-        await connectDB();
         const body = await req.json();
-        const { jDate, title } = body;
+        const rawDate = body.jDate;
 
-        if (!jDate) {
-            return NextResponse.json({ error: "تاریخ شمسی (jDate) الزامی است" }, { status: 400 });
-        }
+        // تبدیل همه اعداد فارسی به انگلیسی
+        const normalizedDate = toEnglishDigits(rawDate);
+        console.log("normalizedDaten", normalizedDate)
 
-        const normalized = toEnglishDigits(jDate);
-        const gDate = jalaaliToGDateStartOfDay(normalized);
-        if (!gDate) {
-            return NextResponse.json({ error: "تاریخ وارد شده معتبر نیست" }, { status: 400 });
-        }
+        // مطمئن شو سه بخش داره و صفرها رو تکمیل کن
+        const parts = normalizedDate.split(/[\/\-]/);
+        const jDate = `${parts[0].padStart(4, "0")}/${parts[1].padStart(2, "0")}/${parts[2].padStart(2, "0")}`;
+        console.log("jDate", jDate)
 
-        // check unique
-        const exists = await Holiday.findOne({ jDate: normalized });
-        if (exists) {
-            return NextResponse.json({ error: "این تاریخ قبلاً به عنوان تعطیل ثبت شده" }, { status: 400 });
-        }
+        const newHoliday = await Holiday.create({
+            title: body.title,
+            jDate,
+        });
 
-        const newH = await Holiday.create({ jDate: normalized, gDate, title: title || "تعطیل رسمی" });
-        return NextResponse.json({ message: "ثبت شد", holiday: newH });
+        return NextResponse.json({ success: true, holiday: newHoliday });
     } catch (err) {
-        console.error("❌ POST /admin/holidays error:", err);
-        return NextResponse.json({ error: "خطای سرور" }, { status: 500 });
+        console.error("❌ Holiday POST error:", err);
+        return NextResponse.json({ error: "Server error" }, { status: 500 });
     }
 }
