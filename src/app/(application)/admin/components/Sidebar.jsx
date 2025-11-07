@@ -8,6 +8,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 const links = [
     { href: '/admin/reservation', label: "نوبت ها" },
     { href: '/admin/hall', label: "سالن ها" },
+    { href: '/admin/holiday', label: "تعطیلات رسمی" },
     { href: '/admin/blog', label: 'مقالات' },
     { href: '/admin/change-password', label: "تغییر رمز" },
 ];
@@ -27,8 +28,8 @@ export default function Sidebar() {
     const toggleMenu = () => setMenuOpen(!menuOpen);
 
     return (
-        <aside className="bg-gray-200 border border-gray-200 rounded-lg sm:h-96 mb-10 h-auto shadow-sm w-full sm:w-64">
-            <div className="flex flex-col p-4 gap-4 h-full relative">
+        <aside className="bg-gray-200 border border-gray-200 rounded-lg sm:h-[25rem] mb-10 h-auto shadow-sm w-full sm:w-64">
+            <div className="flex flex-col p-4 h-full relative">
                 {/* Header */}
                 <div className="flex justify-between items-center sm:block">
                     <Link href="/admin">
@@ -75,7 +76,7 @@ export default function Sidebar() {
                 {/* Logout Button */}
                 <button
                     onClick={handleLogout}
-                    className="text-red-500 hover:text-red-700 text-[16px] sm:text-lg transition-colors mt-4 sm:mt-8 font-medium"
+                    className="text-red-500 hover:text-red-700 text-[16px] sm:text-lg transition-colors mt-4 font-medium"
                 >
                     خروج
                 </button>

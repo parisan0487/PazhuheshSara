@@ -14,6 +14,7 @@ export default function AdminPage() {
     const links = [
         { href: '/admin/reservation', label: "🗓️نوبت ها" },
         { href: '/admin/hall', label: "🏟️سالن ها" },
+        { href: '/admin/holiday', label: "🗓️مدیریت تعطیلات" },
         { href: '/admin/blog', label: '📰 مدیریت مقالات' },
         { href: '/admin/change-password', label: '🔒 تغییر رمز عبور' },
     ];

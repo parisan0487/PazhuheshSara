@@ -79,23 +79,16 @@ export async function POST(req) {
         if (exist) {
             return NextResponse.json({ error: "این تایم قبلاً رزرو شده است" }, { status: 400 });
         }
-
         
         
-        // 🗓 بررسی تعطیل رسمی بودن روز انتخاب‌شده
-        console.log("📅 Checking holiday for jDate:", normalizedDate);
-
+        // بررسی تعطیل رسمی بودن روز انتخاب‌شده
         const foundHoliday = await Holiday.findOne({ jDate: normalizedDate });
-        console.log("🧾 Found holiday record:", foundHoliday);
 
         if (foundHoliday) {
-            console.log("🚫 This day is a holiday:", foundHoliday.title);
             return NextResponse.json(
-                { error: `❌ این تاریخ (${foundHoliday.title}) تعطیل رسمی است و امکان رزرو وجود ندارد.` },
+                { error: `این تاریخ تعطیل رسمی است و امکان رزرو وجود ندارد` },
                 { status: 400 }
             );
-        } else {
-            console.log("✅ No holiday found for this date.");
         }
 
 

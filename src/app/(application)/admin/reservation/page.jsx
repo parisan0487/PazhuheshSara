@@ -85,7 +85,7 @@ export default function AdminPanelModern() {
                                 const data = await res.json();
                                 if (!res.ok) throw new Error(data.error || "خطا در حذف رزرو");
                                 setReservations((prev) => prev.filter((r) => r._id !== id));
-                                toast.success("✅ رزرو با موفقیت حذف شد");
+                                toast.success("رزرو با موفقیت حذف شد");
                             } catch (err) {
                                 toast.error("❌ " + err.message);
                             } finally {
