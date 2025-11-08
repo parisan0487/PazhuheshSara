@@ -19,7 +19,7 @@ const team = [
 
 
 
-export default function TeamSection() {
+export default function Honarvar() {
     const [startIndex, setStartIndex] = useState(0);
     const [visibleCount, setVisibleCount] = useState(3);
 
