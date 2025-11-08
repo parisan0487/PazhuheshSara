@@ -32,7 +32,7 @@ const FeatureBox = () => {
     ];
 
     return (
-        <div className="flex justify-center px-4 py-12 mt-5">
+        <div className="flex justify-center px-4 md:py-12">
             <motion.div
                 ref={ref}
                 initial={{ opacity: 0, y: 50 }}

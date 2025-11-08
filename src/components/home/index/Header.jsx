@@ -38,7 +38,7 @@ export default function Header() {
                     >
                         {/* دکمه اول */}
                         <Link href="/reservations">
-                            <button className="relative w-[160px] h-12 rounded-3xl overflow-hidden group flex items-center justify-center text-center font-bold text-black focus:outline-none max-[379px]:w-[140px]! max-[341px]:w-[125px]!">
+                            <button className="relative w-[153px] h-12 rounded-3xl overflow-hidden group flex items-center justify-center text-center font-bold text-black focus:outline-none max-[379px]:w-[140px]! max-[341px]:w-[125px]!">
                                 <span className="absolute inset-0 bg-gradient-to-r from-[#019297] via-[#73ED7C] to-[#019297] bg-[length:200%_auto] transition-all duration-400 ease-in-out group-hover:bg-right-bottom"></span>
                                 <div className="relative z-10 flex items-center justify-center gap-2">
                                     نوبت دهی
@@ -62,7 +62,7 @@ export default function Header() {
 
                         {/* دکمه دوم */}
                         <Link href="/about">
-                            <button className="relative w-[160px] h-12 rounded-3xl overflow-hidden group flex items-center justify-center text-center font-bold max-[379px]:w-[140px]! max-[341px]:w-[125px]!">
+                            <button className="relative w-[153px] h-12 rounded-3xl overflow-hidden group flex items-center justify-center text-center font-bold max-[379px]:w-[140px]! max-[341px]:w-[125px]!">
                                 <span className="absolute inset-0 bg-[#ededed] transition-all duration-500 ease-in-out"></span>
                                 <span className="absolute inset-0 bg-gradient-to-r from-[#019297] via-[#73ED7C] to-[#019297] bg-[length:200%_auto] opacity-0 transition-all duration-800 ease-in-out group-hover:opacity-100 group-hover:bg-left"></span>
                                 <div className="relative z-10 flex items-center justify-center gap-2">
@@ -89,11 +89,9 @@ export default function Header() {
                     </motion.div>
                 </div>
 
-                {/* بخش وبلاگ (خبرنامه جمع و جور) */}
-                <div className="order-2 md:order-2 w-full md:w-[85%] mx-auto md:mx-0">
 
+                <div className="order-2 md:order-2 w-full md:w-[85%] mx-auto md:mx-0 max-md:mt-8">
                     <BlogSlider />
-
                 </div>
             </div>
         </div>

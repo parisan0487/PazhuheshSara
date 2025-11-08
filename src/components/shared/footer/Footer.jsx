@@ -26,7 +26,7 @@ export default function Footer() {
                     {/* تماس با شرکت */}
                     <div className="space-y-2">
                         <h3 className="font-bold text-[25px] transition-colors duration-500 hover:text-[#73ED7C]">تماس</h3>
-                        <p className="text-sm">arc.team1403@gmail.com</p>
+                        <p className="text-sm">example@gmail.com</p>
                         <p className="text-sm">09304898743</p>
                     </div>
                 </div>
@@ -37,9 +37,9 @@ export default function Footer() {
                 <div className="flex flex-wrap justify-center md:justify-start gap-4 text-[15px] sm:text-lg sm:font-bold font-medium">
                     <Link href="/" className="hover:text-green-400 transition">صفحه اصلی</Link>
                     <Link href="/reservations" className="hover:text-green-400 transition">نوبت دهی</Link>
-                    <Link href="/portfolio" className="hover:text-green-400 transition">دوره های آموزشی</Link>
-                    <Link href="/about" className="hover:text-green-400 transition">درباره ما</Link>
+                    {/* <Link href="/portfolio" className="hover:text-green-400 transition">دوره های آموزشی</Link> */}
                     <Link href="/blog" className="hover:text-green-400 transition">وبلاگ</Link>
+                    <Link href="/about" className="hover:text-green-400 transition">درباره ما</Link>
                 </div>
                 <p className="text-xs sm:text-sm text-gray-300">
                     تمامی حقوق این سایت برای <span className="font-bold text-white">پژوهس سرا</span> محفوظ است.

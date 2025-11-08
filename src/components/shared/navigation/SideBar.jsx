@@ -8,10 +8,10 @@ import clsx from "clsx"
 const navItems = [
     { title: "صفحه اصلی", href: "/" },
     // { title: "خدمات", href: "/services" },
-    // { title: "وبلاگ", href: "/blog", },
     // { title: "پروژه های ما", href: "/portfolio" },
     { title: "نوبت دهی", href: "/reservations" },
     { title: "دوره های آموزشی", href: "/courses" },
+    { title: "وبلاگ", href: "/blog", },
     { title: "درباره ما", href: "/about" },
     // { title: "تماس با ما", href: "/contact" },
 ]
