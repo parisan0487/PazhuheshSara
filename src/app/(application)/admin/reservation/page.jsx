@@ -74,7 +74,7 @@ export default function AdminPanelModern() {
     const handleDelete = async (id) => {
         toast((t) => (
             <div className="text-center">
-                <p className="font-semibold mb-2 text-gray-800">آیا از حذف این رزرو مطمئن هستید؟</p>
+                <p className="font-semibold mb-2 text-gray-800">آیا از حذف رزرو مطمئن هستید؟</p>
                 <div className="flex justify-center gap-3">
                     <button
                         onClick={async () => {
@@ -94,7 +94,7 @@ export default function AdminPanelModern() {
                         }}
                         className="bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-red-700 transition"
                     >
-                        بله، حذف شود
+                         حذف شود
                     </button>
                     <button
                         onClick={() => toast.dismiss(t.id)}
@@ -130,7 +130,7 @@ export default function AdminPanelModern() {
             <div className="overflow-x-auto mt-3">
                 <table className="w-full min-w-[950px] border-collapse text-center">
                     <thead>
-                        <tr className="bg-gray-200">
+                        <tr className="bg-[#c1ebe8]">
                             <th className="border p-3">تاریخ</th>
                             <th className="border p-3">ساعت</th>
                             <th className="border p-3">نام</th>
@@ -189,7 +189,7 @@ export default function AdminPanelModern() {
                                         disabled={deleting === r._id}
                                         className="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 disabled:opacity-50"
                                     >
-                                        {deleting === r._id ? "در حال حذف..." : "🗑️ حذف"}
+                                        {deleting === r._id ? "در حال حذف..." : "حذف"}
                                     </button>
                                 </td>
                             </tr>

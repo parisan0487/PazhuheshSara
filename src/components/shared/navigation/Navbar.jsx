@@ -27,9 +27,9 @@ export default function Navbar() {
         { href: "/", label: "صفحه اصلی" },
         // { href: "/services", label: "خدمات" },
         // { href: "/portfolio", label: "پروژه های ما" },
-        // { href: "/blog", label: "وبلاگ" },
         { href: "/reservations", label: "نوبت دهی" },
         { href: "/courses", label: "دوره های آموزشی" },
+        { href: "/blog", label: "وبلاگ" },
         { href: "/about", label: "درباره ما" },
         // { href: "/contact", label: "تماس با ما" },
     ];

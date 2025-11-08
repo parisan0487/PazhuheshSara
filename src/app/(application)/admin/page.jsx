@@ -16,7 +16,7 @@ export default function AdminPage() {
         { href: '/admin/hall', label: "🏟️سالن ها" },
         { href: '/admin/holiday', label: "🗓️مدیریت تعطیلات" },
         { href: '/admin/blog', label: '📰 مدیریت مقالات' },
-        { href: '/admin/change-password', label: '🔒 تغییر رمز عبور' },
+        // { href: '/admin/change-password', label: '🔒 تغییر رمز عبور' },
     ];
 
     return (
@@ -33,7 +33,7 @@ export default function AdminPage() {
                     <Link
                         key={index}
                         href={item.href}
-                        className="w-full flex flex-col items-center justify-center p-6 sm:p-8 bg-[#1a1a1a] rounded-2xl shadow-md hover:shadow-xl transition-all text-[#00e0ca] font-semibold text-lg sm:text-xl min-h-[110px]" 
+                        className="w-full flex flex-col items-center justify-center p-6 sm:p-6 bg-[#1a1a1a] rounded-2xl shadow-md hover:shadow-xl transition-all text-[#00e0ca] font-semibold text-lg sm:text-xl min-h-[110px]" 
                     >
                         {item.label}
                     </Link>

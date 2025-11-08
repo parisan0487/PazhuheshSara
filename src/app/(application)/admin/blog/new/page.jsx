@@ -22,7 +22,7 @@ export default function NewBlogsPage() {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      TextStyle, 
+      TextStyle,
       Color,
     ],
     content: '',
@@ -108,25 +108,24 @@ export default function NewBlogsPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-[#1a1a1a] rounded-lg shadow-lg text-black border border-gray-700">
-      <h2 className="text-3xl font-bold mb-6 text-[#00e0ca]">افزودن مقاله جدید</h2>
+    <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-lg text-gray-900 border border-gray-200">
+      <h2 className="text-3xl font-bold mb-6 text-[#019297]">افزودن مقاله جدید</h2>
       {error && <p className="text-red-500 mb-4">{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <input
           type="text"
           placeholder="عنوان مقاله"
-          className="w-full p-3 rounded bg-[#121212] border border-gray-700 text-black"
+          className="w-full p-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]/40 transition"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           disabled={uploading}
           required
         />
 
-
-        <textarea
-          placeholder="توضیح کوتاه (excerpt)"
-          className="w-full p-3 rounded bg-[#121212] border border-gray-700 text-black"
+        <input
+          placeholder="توضیح کوتاه"
+          className="w-full p-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#00e0ca]/40 transition"
           rows={3}
           value={excerpt}
           onChange={(e) => setExcerpt(e.target.value)}
@@ -135,13 +134,15 @@ export default function NewBlogsPage() {
         />
 
         {/* Toolbar */}
-        <label className="block font-bold text-sm text-gray-300 mb-1 mt-4">ابزار ویرایش</label>
+        <label className="block font-bold text-sm text-gray-700 mb-1 mt-4">ابزار ویرایش</label>
         {editor && (
           <div className="flex gap-2 flex-wrap">
             <button
               type="button"
               onClick={() => editor.chain().focus().toggleBold().run()}
-              className={`px-3 py-1 rounded ${editor.isActive('bold') ? 'bg-[#00e0ca]' : 'bg-gray-700'
+              className={`px-3 py-1 rounded-md border text-sm transition ${editor.isActive('bold')
+                  ? 'bg-[#00e0ca] text-white border-transparent'
+                  : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'
                 }`}
             >
               Bold
@@ -149,42 +150,44 @@ export default function NewBlogsPage() {
             <button
               type="button"
               onClick={() => editor.chain().focus().toggleItalic().run()}
-              className={`px-3 py-1 rounded ${editor.isActive('italic') ? 'bg-[#00e0ca]' : 'bg-gray-700'
+              className={`px-3 py-1 rounded-md border text-sm transition ${editor.isActive('italic')
+                  ? 'bg-[#00e0ca] text-white border-transparent'
+                  : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'
                 }`}
             >
               Italic
             </button>
 
-           
             <input
               type="color"
               onChange={(e) => editor.chain().focus().setColor(e.target.value).run()}
               value={editor.getAttributes('textStyle').color || '#000000'}
-              className="w-10 h-10 p-0 border-0 cursor-pointer"
+              className="w-10 h-10 p-0 border border-gray-300 rounded cursor-pointer bg-white"
               title="انتخاب رنگ متن"
             />
           </div>
         )}
 
-    
-        <label className="block font-bold text-sm text-gray-300 mb-1">توضیحات مقاله:</label>
-        <div className="bg-[#121212] border border-gray-700 rounded p-3 min-h-[300px] text-black">
+        <label className="block font-bold text-sm text-gray-700 mb-1">توضیحات مقاله:</label>
+        <div className="bg-gray-50 border border-gray-300 rounded-lg p-3 min-h-[300px] text-gray-900 focus-within:ring-2 focus-within:ring-[#00e0ca]/40">
           <EditorContent editor={editor} />
         </div>
 
-
-        <label className="block text-[#00e0ca] mt-10 font-semibold">تصویر شاخص مقاله:</label>
+        <label className="block text-[#019297] mt-10 font-semibold">تصویر شاخص مقاله:</label>
         <input
           type="file"
           accept="image/*"
           onChange={handleThumbnailUpload}
           disabled={uploading}
-          className="file:bg-[#00e0ca] file:text-black file:rounded file:px-4 file:py-1 cursor-pointer bg-[#2a2a2a] w-full"
+          className="file:bg-[#00e0ca] file:text-white file:rounded file:px-4 file:py-1 cursor-pointer bg-gray-100 w-full"
         />
         {uploading && <p className="text-[#00e0ca]">در حال آپلود...</p>}
 
         {imageUrl && (
-          <div className="mt-4 relative w-30 h-30 rounded-lg border border-[#00e0ca] overflow-hidden" style={{ width: '120px', height: '120px' }}>
+          <div
+            className="mt-4 relative w-30 h-30 rounded-lg border border-[#00e0ca] overflow-hidden"
+            style={{ width: '120px', height: '120px' }}
+          >
             <Image
               src={imageUrl}
               alt="تصویر شاخص"
@@ -196,7 +199,7 @@ export default function NewBlogsPage() {
             <button
               type="button"
               onClick={handleRemoveThumbnail}
-              className="absolute top-1 left-1 bg-red-600 text-black rounded px-2 py-1 text-sm"
+              className="absolute top-1 left-1 bg-red-600 text-white rounded px-2 py-1 text-sm"
             >
               حذف
             </button>
@@ -205,11 +208,21 @@ export default function NewBlogsPage() {
 
         <button
           type="submit"
-          className={`w-full py-3 rounded text-black font-semibold transition ${uploading || !title.trim() || !excerpt.trim() || !editor?.getHTML().trim() || !imageUrl
-            ? 'bg-[#00e0ca]/60 cursor-not-allowed'
-            : 'bg-[#00e0ca] hover:bg-[#00bfa1]'
+          className={`w-full py-3 rounded-lg font-semibold transition ${uploading ||
+              !title.trim() ||
+              !excerpt.trim() ||
+              !editor?.getHTML().trim() ||
+              !imageUrl
+              ? 'bg-[#00e0ca]/60 cursor-not-allowed text-white'
+              : 'bg-[#00e0ca] hover:bg-[#00bfa1] text-white'
             }`}
-          disabled={uploading || !title.trim() || !excerpt.trim() || !editor?.getHTML().trim() || !imageUrl}
+          disabled={
+            uploading ||
+            !title.trim() ||
+            !excerpt.trim() ||
+            !editor?.getHTML().trim() ||
+            !imageUrl
+          }
         >
           {uploading ? 'در حال ذخیره مقاله...' : 'ذخیره مقاله'}
         </button>

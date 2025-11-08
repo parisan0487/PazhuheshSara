@@ -73,48 +73,49 @@ export default function AdminHalls() {
     };
 
     const handleDelete = (id) => {
-        toast(
-            (t) => (
-                <div className="flex flex-col gap-2">
-                    <p>آیا مطمئن هستید می‌خواهید این سالن را حذف کنید؟</p>
-                    <div className="flex gap-2 justify-end">
-                        <button
-                            className="bg-red-500 text-white px-3 py-1 rounded"
-                            onClick={async () => {
-                                toast.dismiss(t.id);
-                                try {
-                                    setLoading(true);
-                                    const res = await fetch(`/api/admin/halls?id=${id}`, { method: "DELETE" });
-                                    const data = await res.json();
-                                    if (res.ok) toast.success(data.message);
-                                    else toast.error(data.message || "خطا در حذف سالن");
-                                    fetchHalls();
-                                } catch (err) {
-                                    toast.error("خطا در حذف سالن");
-                                } finally {
-                                    setLoading(false);
-                                }
-                            }}
-                        >
-                            حذف
-                        </button>
-                        <button
-                            className="bg-gray-300 px-3 py-1 rounded"
-                            onClick={() => toast.dismiss(t.id)}
-                        >
-                            انصراف
-                        </button>
-                    </div>
+        toast((t) => (
+            <div className="text-center px-2">
+                <p className="font-semibold mb-3 text-gray-800">
+                    آیا از حذف سالن مطمئن هستید؟
+                </p>
+                <div className="flex justify-center gap-3">
+                    <button
+                        className="bg-red-600 text-white px-4 py-1 rounded-lg hover:bg-red-700 transition"
+                        onClick={async () => {
+                            toast.dismiss(t.id);
+                            try {
+                                setLoading(true);
+                                const res = await fetch(`/api/admin/halls?id=${id}`, { method: "DELETE" });
+                                const data = await res.json();
+                                if (res.ok) toast.success(data.message || "سالن با موفقیت حذف شد");
+                                else toast.error(data.message || "خطا در حذف سالن");
+                                fetchHalls();
+                            } catch (err) {
+                                toast.error("❌ خطا در حذف سالن");
+                            } finally {
+                                setLoading(false);
+                            }
+                        }}
+                    >
+                         حذف شود
+                    </button>
+                    <button
+                        className="bg-gray-300 text-gray-800 px-4 py-1 rounded-lg hover:bg-gray-400 transition"
+                        onClick={() => toast.dismiss(t.id)}
+                    >
+                        انصراف
+                    </button>
                 </div>
-            ),
-            { duration: 10000 }
-        );
+            </div>
+        ), {
+            duration: 10000,
+        });
     };
 
 
     return (
         <div className="p-6 bg-gray-50 rounded-2xl shadow-lg max-w-3xl mx-auto space-y-6">
-            <h2 className="text-2xl font-bold text-green-600 text-center">مدیریت سالن‌ها</h2>
+            <h2 className="text-2xl font-bold text-green-800 text-center">مدیریت سالن‌ها</h2>
 
             {/* فرم اضافه کردن / ویرایش */}
             <div className="space-y-4 border border-green-300 p-5 rounded-xl shadow-sm bg-white">
@@ -152,8 +153,8 @@ export default function AdminHalls() {
                     onClick={handleSubmit}
                     disabled={loading}
                     className={`w-full py-3 rounded-lg font-semibold transition ${editingId
-                        ? "bg-green-500 hover:bg-green-600 text-white"
-                        : "bg-green-600 hover:bg-green-700 text-white"
+                        ? "bg-[#00e0ca] hover:bg-green-400 text-white"
+                        : "bg-[#00e0ca] hover:bg-green-400 text-white"
                         }`}
                 >
                     {loading ? "در حال انجام..." : editingId ? "ویرایش سالن" : "اضافه کردن سالن"}
@@ -165,18 +166,18 @@ export default function AdminHalls() {
                 {halls.map(hall => (
                     <div key={hall._id} className="flex justify-between items-center border border-green-200 rounded-lg p-4 shadow-sm bg-white">
                         <div>
-                            <span className="font-semibold text-green-700">{hall.name}</span> - روزهای باز: {hall.availableDays.join(", ")}
+                            <span className="font-semibold text-green-800">{hall.name}</span> - روزهای باز: {hall.availableDays.join(", ")}
                         </div>
                         <div className="flex gap-2">
                             <button
                                 onClick={() => startEdit(hall)}
-                                className="bg-yellow-400 hover:bg-yellow-500 px-3 py-1 rounded text-white font-medium"
+                                className="text-green-800 hover:underline font-medium"
                             >
                                 ویرایش
                             </button>
                             <button
                                 onClick={() => handleDelete(hall._id)}
-                                className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-white font-medium"
+                                className="text-red-600 hover:text-red-800 hover:underline font-medium transition"
                             >
                                 حذف
                             </button>
