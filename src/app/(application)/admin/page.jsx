@@ -1,22 +1,19 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { verifyToken } from '@/lib/auth';
+import { getCurrentAdmin } from '@/lib/auth';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export default function AdminPage() {
-    const token = cookies().get('token')?.value;
+    const admin = getCurrentAdmin();
 
-    if (!verifyToken(token)) {
-        redirect('/admin/login');
+    if (!admin) {
+        redirect('/admin/login'); 
     }
-
 
     const links = [
         { href: '/admin/reservation', label: "🗓️نوبت ها" },
         { href: '/admin/hall', label: "🏟️سالن ها" },
         { href: '/admin/holiday', label: "🗓️مدیریت تعطیلات" },
         { href: '/admin/blog', label: '📰 مدیریت مقالات' },
-        // { href: '/admin/change-password', label: '🔒 تغییر رمز عبور' },
     ];
 
     return (
@@ -25,7 +22,7 @@ export default function AdminPage() {
                 خوش اومدی 👋
             </h1>
             <p className="text-gray-400 mb-10 text-sm sm:text-base">
-                اینجا می‌توانید مدیریت مقالات، نوبت هاو سالن ها را به آسانی انجام دهید
+                اینجا می‌توانید مدیریت مقالات، نوبت ها و سالن ها را به آسانی انجام دهید
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 text-center">
@@ -33,7 +30,7 @@ export default function AdminPage() {
                     <Link
                         key={index}
                         href={item.href}
-                        className="w-full flex flex-col items-center justify-center p-6 sm:p-6 bg-[#1a1a1a] rounded-2xl shadow-md hover:shadow-xl transition-all text-[#00e0ca] font-semibold text-lg sm:text-xl min-h-[110px]" 
+                        className="w-full flex flex-col items-center justify-center p-6 sm:p-6 bg-[#1a1a1a] rounded-2xl shadow-md hover:shadow-xl transition-all text-[#00e0ca] font-semibold text-lg sm:text-xl min-h-[110px]"
                     >
                         {item.label}
                     </Link>
