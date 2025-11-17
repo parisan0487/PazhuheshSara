@@ -1,4 +1,3 @@
-export const dynamic = 'force-dynamic';
 import { getCurrentAdmin } from '@/lib/auth';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
