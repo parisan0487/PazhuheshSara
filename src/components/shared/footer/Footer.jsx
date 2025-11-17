@@ -33,7 +33,7 @@ export default function Footer() {
             </div>
 
             {/* خط جداکننده و فوتر پایین */}
-            <div className="mt-10 border-t border-white/20 pt-10 text-sm flex flex-col md:flex-row justify-between items-center gap-6 text-center">
+            <div className="mt-10 border-t border-white/20 text-sm flex flex-col md:flex-row justify-between items-center gap-6 text-center">
                 <div className="flex flex-wrap justify-center md:justify-start gap-4 text-[15px] sm:text-lg sm:font-bold font-medium">
                     <Link href="/" className="hover:text-green-400 transition">صفحه اصلی</Link>
                     <Link href="/reservations" className="hover:text-green-400 transition">نوبت دهی</Link>
@@ -41,13 +41,16 @@ export default function Footer() {
                     <Link href="/blog" className="hover:text-green-400 transition">وبلاگ</Link>
                     <Link href="/about" className="hover:text-green-400 transition">درباره ما</Link>
                 </div>
-                <p className="text-xs sm:text-sm text-gray-300">
-                    تمامی حقوق این سایت برای <span className="font-bold text-white">پژوهس سرا</span> محفوظ است.
-                </p>
+
+                <div className="flex flex-col items-center gap-2 mt-4">
+                    <p className="text-xs sm:text-sm text-gray-300">
+                        تمامی حقوق این سایت برای <span className="font-bold text-white">پژوهس سرا</span> محفوظ است.
+                    </p>
+                    <a href="https://parisan0487.github.io">طراحی شده توسط : <span className="text-blue-200 underline underline-offset-2">پریسان غلامی</span></a>
             </div>
+        </div>
 
-
-        </footer>
+        </footer >
     );
 }
 
