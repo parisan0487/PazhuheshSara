@@ -3,7 +3,7 @@ import { Toaster } from "react-hot-toast";
 
 
 export const metadata = {
-  title: "پژوهش سرا",
+  title: "پژوهش سرای کاشمر",
   description: "پژوهش سرا کاشمر نوبت دهی",
   icons: {
     icon: "/img/logo.jpg", 
