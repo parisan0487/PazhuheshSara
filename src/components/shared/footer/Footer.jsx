@@ -34,7 +34,7 @@ export default function Footer() {
 
             {/* خط جداکننده و فوتر پایین */}
             <div className="mt-10 border-t border-white/20 text-sm flex flex-col md:flex-row justify-between items-center gap-6 text-center">
-                <div className="flex flex-wrap justify-center md:justify-start gap-4 text-[15px] sm:text-lg sm:font-bold font-medium">
+                <div className="flex flex-wrap justify-center md:justify-start gap-4 text-[15px] max-md:mt-5 sm:text-lg sm:font-bold font-medium">
                     <Link href="/" className="hover:text-green-400 transition">صفحه اصلی</Link>
                     <Link href="/reservations" className="hover:text-green-400 transition">نوبت دهی</Link>
                     {/* <Link href="/portfolio" className="hover:text-green-400 transition">دوره های آموزشی</Link> */}

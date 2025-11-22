@@ -63,18 +63,24 @@ export default function Header() {
                         {/* دکمه دوم */}
                         <Link href="/about">
                             <button className="relative w-[153px] h-12 rounded-3xl overflow-hidden group flex items-center justify-center text-center font-bold max-[379px]:w-[140px]! max-[341px]:w-[125px]!">
-                                <span className="absolute inset-0 bg-[#ededed] transition-all duration-500 ease-in-out"></span>
+                                <span className="absolute inset-0 bg-[#ededed] transition-all duration-500 ease-in-out dark:bg-gray-600"></span>
+
                                 <span className="absolute inset-0 bg-gradient-to-r from-[#019297] via-[#73ED7C] to-[#019297] bg-[length:200%_auto] opacity-0 transition-all duration-800 ease-in-out group-hover:opacity-100 group-hover:bg-left"></span>
+
                                 <div className="relative z-10 flex items-center justify-center gap-2">
-                                    <span className="text-black group-hover:text-black transition-colors duration-300">
+
+
+                                    <span className="text-black group-hover:text-black transition-colors duration-300 dark:text-white dark:group-hover:text-white">
                                         بیشتر بخوانید
                                     </span>
+
+
                                     <div className="rotate-[226deg] group-hover:rotate-[179deg] transition-transform duration-400">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 30 24"
                                             fill="currentColor"
-                                            className="w-6 h-6 text-[#019297] group-hover:text-black transition-colors duration-300"
+                                            className="w-6 h-6 text-[#019297] group-hover:text-black transition-colors duration-300 dark:text-white dark:group-hover:text-white"
                                         >
                                             <path
                                                 fillRule="evenodd"
@@ -83,6 +89,7 @@ export default function Header() {
                                             />
                                         </svg>
                                     </div>
+
                                 </div>
                             </button>
                         </Link>

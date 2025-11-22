@@ -52,10 +52,10 @@ const FeatureBox = () => {
                                 <div className="p-4 bg-white rounded-full shadow-md mb-3 border border-gray-200">
                                     {feature.icon}
                                 </div>
-                                <h3 className="font-bold text-lg text-black dark:text-gray-100 mb-1">
+                                <h3 className="font-bold text-lg text-black mb-1">
                                     {feature.title}
                                 </h3>
-                                <p className="text-black/80 dark:text-gray-300 text-sm">
+                                <p className="text-black/80 text-sm">
                                     {feature.desc}
                                 </p>
 
